@@ -39,7 +39,6 @@ void CBall::Draw()
 void CBall::Uninit()
 {
 	m_Model->Unload();
-	CScene* scene = CManager::GetScene();
 }
 
 void CBall::Update()
