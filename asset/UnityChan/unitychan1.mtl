@@ -1,0 +1,104 @@
+# Blender MTL File: 'unitychan1.blend'
+# Material Count: 9
+
+newmtl body.002
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Models\\UnityChanShader\\Texture\\body_01.tga
+
+newmtl eye_L1.002
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Models\\UnityChanShader\\Texture\\eye_iris_L_00.tga
+
+newmtl eye_R1.002
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Models\\UnityChanShader\\Texture\\eye_iris_R_00.tga
+
+newmtl eyebase.002
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 0.000000
+illum 2
+map_Kd Models\\UnityChanShader\\Texture\\eyeline_00.tga
+map_d Models\\UnityChanShader\\Texture\\eyeline_00.tga
+
+newmtl eyeline.002
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 0.000000
+illum 2
+map_Kd Models\\UnityChanShader\\Texture\\eyeline_00.tga
+map_d Models\\UnityChanShader\\Texture\\eyeline_00.tga
+
+newmtl face.002
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Models\\UnityChanShader\\Texture\\face_00.tga
+
+newmtl hair.002
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Models\\UnityChanShader\\Texture\\hair_01.tga
+
+newmtl mat_cheek.002
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 0.000000
+illum 2
+map_Kd Models\\UnityChanShader\\Texture\\cheek_00.tga
+map_d Models\\UnityChanShader\\Texture\\cheek_00.tga
+
+newmtl skin1.002
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Models\\UnityChanShader\\Texture\\skin_01.tga
