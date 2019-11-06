@@ -19,7 +19,6 @@ public:
 	void Uninit();
 	void Update();
 	void Draw();
-	XMFLOAT3 GetPosition();
 	CIRCLE* circle;
 };
 

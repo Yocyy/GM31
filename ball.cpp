@@ -85,8 +85,3 @@ void CBall::Update()
 	m_Position.y = m_Field->GetHeight(m_Position) + 0.5f;
 	circle->Pos = m_Position;
 }
-
-XMFLOAT3 CBall::GetPosition()
-{
-	return m_Position;
-}
