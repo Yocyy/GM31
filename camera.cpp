@@ -123,12 +123,9 @@ void CCamera::Update()
 
 void CCamera::Draw()
 {
-
-	XMMATRIX	m_ViewMatrix;
-	XMMATRIX	m_InvViewMatrix;
-	XMMATRIX	m_ProjectionMatrix;
-
-
+	XMMATRIX	ViewMatrix;
+	XMMATRIX	InvViewMatrix;
+	XMMATRIX	ProjectionMatrix;
 
 	// ビューポート設定
 	D3D11_VIEWPORT dxViewport;
@@ -144,25 +141,49 @@ void CCamera::Draw()
 
 
 	// ビューマトリクス設定
-	m_InvViewMatrix = XMMatrixRotationRollPitchYaw(m_Rotation.x, m_Rotation.y, m_Rotation.z);
-	m_InvViewMatrix *= XMMatrixTranslation(m_Position.x, m_Position.y, m_Position.z);
+	InvViewMatrix = XMMatrixRotationRollPitchYaw(m_Rotation.x, m_Rotation.y, m_Rotation.z);
+	InvViewMatrix *= XMMatrixTranslation(m_Position.x, m_Position.y, m_Position.z);
 
 	XMVECTOR det;
-	m_ViewMatrix = XMMatrixInverse(&det, m_InvViewMatrix);
+	ViewMatrix = XMMatrixInverse(&det, InvViewMatrix);
 
-	CRenderer::SetViewMatrix(&m_ViewMatrix);
-
-
+	CRenderer::SetViewMatrix(&ViewMatrix);
 
 	// プロジェクションマトリクス設定
-	m_ProjectionMatrix = XMMatrixPerspectiveFovLH(1.0f, dxViewport.Width / dxViewport.Height, 1.0f, 1000.0f);
+	ProjectionMatrix = XMMatrixPerspectiveFovLH(1.0f, dxViewport.Width / dxViewport.Height, 1.0f, 1000.0f);
 
-	CRenderer::SetProjectionMatrix(&m_ProjectionMatrix);
+	CRenderer::SetProjectionMatrix(&ProjectionMatrix);
 
+	XMStoreFloat4x4(&m_ProjectionMatrix, ProjectionMatrix);
+	XMStoreFloat4x4(&m_ViewMatrix, ViewMatrix);
 }
 
 void CCamera::Set_Player(CPlayer * player)
 {
 	m_Player = player;
+}
+
+bool CCamera::GetVisibility(XMFLOAT3 Position, float Radius)
+{
+	XMVECTOR worldPos, viewPos, projPos;
+	XMFLOAT3 projPosF;
+	XMMATRIX	ViewMatrix, ProjectionMatrix;
+
+	ViewMatrix = XMLoadFloat4x4(&m_ViewMatrix);
+	ProjectionMatrix = XMLoadFloat4x4(&m_ProjectionMatrix);
+
+	worldPos = XMLoadFloat3(&Position);
+	viewPos = XMVector3TransformCoord(worldPos, ViewMatrix);		//座標変換
+	projPos = XMVector3TransformCoord(viewPos, ProjectionMatrix);
+	XMStoreFloat3(&projPosF, projPos);
+	Radius = 0;
+	if (-1.0f < projPosF.x+Radius && projPosF.x-Radius < 1.0f &&
+		-1.0f < projPosF.y+Radius && projPosF.y-Radius < 1.0f &&
+		0.0f < projPosF.z && projPosF.z < 1.0f)
+	{
+		return true;
+	}
+
+	return false;
 }
 

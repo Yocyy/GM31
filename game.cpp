@@ -19,6 +19,8 @@
 
 void CGame::Init()
 {
+	ShowCursor(false);
+
 	AddGameObject<CCamera>(Layer3D_CAMERA);
 	AddGameObject<CField>(Layer3D_MODEL);
 	AddGameObject<CWall>(Layer3D_MODEL);
@@ -27,8 +29,6 @@ void CGame::Init()
 	AddGameObject<CEnemy>(Layer3D_MODEL);
 	AddGameObject<CEnemy>(Layer3D_MODEL);
 	AddGameObject<CBall>(Layer3D_MODEL);
-
-	//AddGameObject<CPolygon>(Layer2D_UI);
 
 	bgm = new CAudioClip();
 	bgm->Load("asset/sound/BGM/a.wav");
@@ -46,7 +46,6 @@ void CGame::Uninit()
 
 void CGame::Update()
 {
-	ShowCursor(false);
 	CScene::Update();
 
 	if (CInput::GetKeyTrigger(VK_RETURN))

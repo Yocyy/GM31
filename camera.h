@@ -11,13 +11,16 @@ private:
 	RECT m_Viewport;
 	CPlayer* m_Player;
 	POINT oldpt;
-
+	XMFLOAT4X4  m_ViewMatrix;
+	XMFLOAT4X4  m_ProjectionMatrix;
+;
 public:
 	void Init();
 	void Uninit();
 	void Update();
 	void Draw();
 	void Set_Player(CPlayer* player);
+	bool GetVisibility(XMFLOAT3 Position , float Radius);
 };
 
 #endif // !CAMERA_H_

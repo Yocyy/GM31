@@ -1,3 +1,4 @@
+#include <random>
 #include "main.h"
 #include "texture.h"
 #include "renderer.h"
@@ -8,7 +9,7 @@
 #include "field.h"
 #include "input.h"
 #include "ball.h"
-#include <random>
+#include "camera.h"
 
 void CBall::Init()
 {
@@ -26,6 +27,13 @@ void CBall::Init()
 
 void CBall::Draw()
 {
+	CCamera* camera;
+	camera = CManager::GetScene()->GetGameObject<CCamera>(Layer3D_CAMERA);
+	if (camera->GetVisibility(m_Position, BALL_RADIUS) == false)
+	{
+		return;
+	}
+
 	// マトリクス設定
 	XMMATRIX world;
 	world = XMMatrixScaling(m_Scale.x, m_Scale.y, m_Scale.z);

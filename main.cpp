@@ -10,7 +10,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 HWND g_Window;
 HCURSOR g_Cursor = GetCursor();
-
+bool Flag_MainLoop = true;
 
 HWND GetWindow()
 {
@@ -62,9 +62,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	UpdateWindow(g_Window);
 	
 	//マウスカーソルの表示/非表示
-	ShowCursor(true);
-	
-//	DestroyCursor(g_Cursor);
+	//ShowCursor(true);
 
 	//フレームカウント初期化
 	DWORD dwExecLastTime;
@@ -132,13 +130,26 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
+	case WM_CLOSE:
+		ShowCursor(true);
+		if (MessageBox(hWnd, "本当に終了してよろしいですか？", "確認", MB_OKCANCEL | MB_DEFBUTTON2) == IDOK) {
+			DestroyWindow(hWnd); // 指定のウィンドウにWM_DESTROYメッセージを送る
+		}
+		ShowCursor(false);
+		return 0; // DefWindowProc関数にメッセージを流さず終了することによって何もなかったことにする
 
 	case WM_KEYDOWN:
 		switch(wParam)
 		{
 		case VK_ESCAPE:
-			DestroyWindow(hWnd);
-			break;
+			ShowCursor(true);
+			if (MessageBox(hWnd, "本当に終了してよろしいですか？", "確認", MB_OKCANCEL | MB_DEFBUTTON2) == IDOK) {
+				DestroyWindow(hWnd); // 指定のウィンドウにWM_DESTROYメッセージを送る
+			}
+			ShowCursor(false);
+			return 0; // DefWindowProc関数にメッセージを流さず終了することによって何もなかったことにする
+			/*	DestroyWindow(hWnd);
+				break;*/
 		}
 		break;
 

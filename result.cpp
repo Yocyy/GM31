@@ -14,7 +14,7 @@ void CResult::Init()
 {
 	//AddGameObject<CCamera>(Layer3D_CAMERA);
 	//AddGameObject<CPolygon>(Layer2D_UI);
-
+	ShowCursor(true);
 	bgm = new CAudioClip();
 	bgm->Load("asset/sound/BGM/a.wav");
 	bgm->Play(true);
@@ -31,7 +31,6 @@ void CResult::Uninit()
 
 void CResult::Update()
 {
-	ShowCursor(true);
 	CScene::Update();
 	if (CInput::GetKeyTrigger(VK_RETURN))
 	{
