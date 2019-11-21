@@ -2,7 +2,24 @@
 #ifndef BALL_H_
 #define BALL_H_
 #include "collision.h"
+//c++シリアライズ用インクルード
+#include "cereal/cereal.hpp"
+#include "cereal/archives/json.hpp"
+#include <fstream>
 #define BALL_RADIUS (1)
+
+struct VECTOR3 {
+	float x, y, z;
+	template<class Archive>
+	void serialize(Archive& archive)
+	{
+		archive(
+			CEREAL_NVP(x),
+			CEREAL_NVP(y),
+			CEREAL_NVP(z)
+		);
+	}
+};
 
 class CBall : public CGameObject
 {

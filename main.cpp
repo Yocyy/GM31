@@ -132,7 +132,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_CLOSE:
 		ShowCursor(true);
-		if (MessageBox(hWnd, "本当に終了してよろしいですか？", "確認", MB_OKCANCEL | MB_DEFBUTTON2) == IDOK) {
+		if (MessageBox(hWnd, "本当に終了してよろしいですか？", "確認", MB_OKCANCEL | MB_DEFBUTTON1) == IDOK) {
 			DestroyWindow(hWnd); // 指定のウィンドウにWM_DESTROYメッセージを送る
 		}
 		ShowCursor(false);
@@ -143,7 +143,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{
 		case VK_ESCAPE:
 			ShowCursor(true);
-			if (MessageBox(hWnd, "本当に終了してよろしいですか？", "確認", MB_OKCANCEL | MB_DEFBUTTON2) == IDOK) {
+			if (MessageBox(hWnd, "本当に終了してよろしいですか？", "確認", MB_OKCANCEL | MB_DEFBUTTON1) == IDOK) {
 				DestroyWindow(hWnd); // 指定のウィンドウにWM_DESTROYメッセージを送る
 			}
 			ShowCursor(false);

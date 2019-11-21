@@ -146,6 +146,7 @@ void CCamera::Draw()
 
 	XMVECTOR det;
 	ViewMatrix = XMMatrixInverse(&det, InvViewMatrix);
+	XMStoreFloat4x4(&m_InvViewMatrix, InvViewMatrix);
 
 	CRenderer::SetViewMatrix(&ViewMatrix);
 
@@ -163,6 +164,11 @@ void CCamera::Set_Player(CPlayer * player)
 	m_Player = player;
 }
 
+XMMATRIX CCamera::Get_Camera_InvViewMatrix()
+{
+	return XMLoadFloat4x4(&m_InvViewMatrix);
+}
+
 bool CCamera::GetVisibility(XMFLOAT3 Position, float Radius)
 {
 	XMVECTOR worldPos, viewPos, projPos;
@@ -176,7 +182,7 @@ bool CCamera::GetVisibility(XMFLOAT3 Position, float Radius)
 	viewPos = XMVector3TransformCoord(worldPos, ViewMatrix);		//ç¿ïWïœä∑
 	projPos = XMVector3TransformCoord(viewPos, ProjectionMatrix);
 	XMStoreFloat3(&projPosF, projPos);
-	Radius = 0;
+	Radius = 0.0f;
 	if (-1.0f < projPosF.x+Radius && projPosF.x-Radius < 1.0f &&
 		-1.0f < projPosF.y+Radius && projPosF.y-Radius < 1.0f &&
 		0.0f < projPosF.z && projPosF.z < 1.0f)

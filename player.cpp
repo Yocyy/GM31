@@ -24,7 +24,8 @@ void CPlayer::Init()
 	m_Position = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	m_Rotation = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	m_Scale = XMFLOAT3(1.0f, 1.0f, 1.0f);
-
+	jump_flag = false;
+	velocity = XMFLOAT3(0.0f, 0.0f, 0.0f);
 
 	m_Model->Load("asset/miku_01.obj");
 	m_AudioClip->Load("asset/sound/SE/shotsound_001.wav");
@@ -105,17 +106,31 @@ void CPlayer::Update()
 	//	XMStoreFloat3(&g_right, vec);
 	//}
 
-	if (CInput::GetKeyTrigger(WM_LBUTTONDOWN))//マウス左クリックWM_LBUTTONDOWN
+	if (CInput::GetKeyPress(WM_LBUTTONDOWN))//マウス左クリックWM_LBUTTONDOWN
 	{
 		CScene* scene = CManager::GetScene();
 		CBullet* bullet = scene->AddGameObject<CBullet>(Layer3D_MODEL);
-		//float x = scene->player->m_Position.x;
-		bullet->SetPosition(m_Position,g_front);
 		m_AudioClip->Play();
 	}
 
-	CField* m_Field = CManager::GetScene()->GetGameObject<CField>(1);
-	m_Position.y = m_Field->GetHeight(m_Position) + 0.5f;
+	// ジャンプ
+	if (CInput::GetKeyTrigger(VK_SPACE) && !jump_flag)
+	{
+		jump_flag = true;
+		velocity.y = JUMP_FORCE;
+	}
+	//重力計算(質量×重力)
+	velocity.y -= MASS * GRAVITE;
+
+	m_Position.y += velocity.y;
+
+	CField* m_Field = CManager::GetScene()->GetGameObject<CField>(Layer3D_MODEL);
+	if (m_Position.y < m_Field->GetHeight(m_Position) + 0.5f)
+	{
+		m_Position.y = m_Field->GetHeight(m_Position) + 0.5f;
+		velocity.y = 0.0f;
+		jump_flag = false;
+	}
 }
 
 XMFLOAT3 CPlayer::Get_Player_Position()

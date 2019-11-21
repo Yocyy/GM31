@@ -12,6 +12,7 @@ private:
 	CPlayer* m_Player;
 	POINT oldpt;
 	XMFLOAT4X4  m_ViewMatrix;
+	XMFLOAT4X4  m_InvViewMatrix;
 	XMFLOAT4X4  m_ProjectionMatrix;
 ;
 public:
@@ -20,6 +21,7 @@ public:
 	void Update();
 	void Draw();
 	void Set_Player(CPlayer* player);
+	XMMATRIX Get_Camera_InvViewMatrix();
 	bool GetVisibility(XMFLOAT3 Position , float Radius);
 };
 

@@ -1,4 +1,7 @@
 #include <random>
+
+
+
 #include "main.h"
 #include "texture.h"
 #include "renderer.h"
@@ -11,6 +14,7 @@
 #include "ball.h"
 #include "camera.h"
 
+
 void CBall::Init()
 {
 	m_Quaternion = XMQuaternionIdentity();
@@ -20,6 +24,19 @@ void CBall::Init()
 	m_Position = XMFLOAT3(float(rand() % 10), 1.0f, 5.0f);
 	m_Rotation = XMFLOAT3(0.0f, 0.0f, 0.0f);	//float(rand() % 10)
 	m_Scale = XMFLOAT3(1.0f, 1.0f, 1.0f);
+	//座標読込
+	{
+		VECTOR3 vec;
+		std::ifstream ifs("JSON/ball/BallData");//呼び出し先
+
+		cereal::JSONInputArchive inArchive(ifs);
+		inArchive(vec);
+		m_Position.x = vec.x;
+		m_Position.y = vec.y;
+		m_Position.z = vec.z;
+		//例外スロー
+	}
+	//	当たり判定
 	circle->radius = BALL_RADIUS;
 
 	m_Model->Load("asset/miku_01.obj");
@@ -46,6 +63,17 @@ void CBall::Draw()
 
 void CBall::Uninit()
 {
+	//送信データを保存
+	VECTOR3 vec;
+	vec.x = m_Position.x;
+	vec.y = m_Position.y;
+	vec.z = m_Position.z;
+	{
+		std::ofstream ofs("JSON/ball/BallData");//保存先
+		cereal::JSONOutputArchive outArchive(ofs);
+		outArchive(vec);
+	}
+
 	m_Model->Unload();
 }
 

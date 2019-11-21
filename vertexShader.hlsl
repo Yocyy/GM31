@@ -1,87 +1,100 @@
 
-
 //*****************************************************************************
 // 定数バッファ
 //*****************************************************************************
 
 // マトリクスバッファ
-cbuffer WorldBuffer : register( b0 )
+cbuffer WorldBuffer : register(b0)
 {
-	matrix World;
+    matrix World;
 }
-cbuffer ViewBuffer : register( b1 )
+cbuffer ViewBuffer : register(b1)
 {
-	matrix View;
+    matrix View;
 }
-cbuffer ProjectionBuffer : register( b2 )
+cbuffer ProjectionBuffer : register(b2)
 {
-	matrix Projection;
+    matrix Projection;
 }
 
 // マテリアルバッファ
 struct MATERIAL
 {
-	float4		Ambient;
-	float4		Diffuse;
-	float4		Specular;
-	float4		Emission;
-	float		Shininess;
-	float3		Dummy;//16bit境界用
+    float4 Ambient;
+    float4 Diffuse;
+    float4 Specular;
+    float4 Emission;
+    float Shininess;
+    float3 Dummy; //16bit境界用
 };
 
-cbuffer MaterialBuffer : register( b3 )
+cbuffer MaterialBuffer : register(b3)
 {
-	MATERIAL	Material;
+    MATERIAL Material;
 }
 
 
 // ライトバッファ
 struct LIGHT
 {
-	float4		Direction;
-	float4		Diffuse;
-	float4		Ambient;
+    float4 Direction;
+    float4 Diffuse;
+    float4 Ambient;
 };
 
-cbuffer LightBuffer : register( b4 )
+cbuffer LightBuffer : register(b4)
 {
-	LIGHT		Light;
+    LIGHT Light;
 }
 
+struct VS_IN
+{
+    float4 inPosition : POSITION0;
+    float4 inNormal : NORMAL0;
+    float4 inDiffuse : COLOR0;
+    float2 inTexCoord : TEXCOORD0;
+    uint inInstanceID : SV_InstanceID;
+};
 
+struct VS_OUT
+{
+    float4 outPosition : SV_POSITION;
+    float4 outNormal : NORMAL0;
+    float2 outTexCoord : TEXCOORD0;
+    float4 outDiffuse : COLOR0;
+};
 
 //=============================================================================
 // 頂点シェーダ
 //=============================================================================
-void main( in  float4 inPosition		: POSITION0,
-						  in  float4 inNormal		: NORMAL0,
-						  in  float4 inDiffuse		: COLOR0,
-						  in  float2 inTexCoord		: TEXCOORD0,
-
-						  out float4 outPosition	: SV_POSITION,
-						  out float4 outNormal		: NORMAL0,
-						  out float2 outTexCoord	: TEXCOORD0,
-						  out float4 outDiffuse		: COLOR0 )
+VS_OUT main(VS_IN input)
 {
-	matrix wvp;
-	wvp = mul(World, View);
-	wvp = mul(wvp, Projection);
+    VS_OUT output;
+    matrix wvp;
 
-	outPosition = mul( inPosition, wvp);
-	outNormal = inNormal;
-	outTexCoord = inTexCoord;
+    input.inPosition.x += input.inInstanceID % 3;
+    input.inPosition.z += input.inInstanceID / 3;
+
+    wvp = mul(World, View);
+    wvp = mul(wvp, Projection);
+
+    output.outPosition = mul(input.inPosition, wvp);
+    output.outNormal = input.inNormal;
+    output.outTexCoord = input.inTexCoord;
 	
-	float4 worldNormal, normal;
-	normal = float4(inNormal.xyz, 0.0);
-	worldNormal = mul(normal, World);
-	worldNormal = normalize(worldNormal);
+    float4 worldNormal, normal;
+    normal = float4(input.inNormal.xyz, 0.0);
+    worldNormal = mul(normal, World);
+    worldNormal = normalize(worldNormal);
 
-	float light = 0.5 - 0.5 * dot(Light.Direction.xyz, worldNormal.xyz);
+    float light = 0.5 - 0.5 * dot(Light.Direction.xyz, worldNormal.xyz);
 
-	outDiffuse = inDiffuse * Material.Diffuse * light * Light.Diffuse;
-	outDiffuse += inDiffuse * Material.Ambient * Light.Ambient;
+    output.outDiffuse = input.inDiffuse * Material.Diffuse * light * Light.Diffuse;
+    output.outDiffuse += input.inDiffuse * Material.Ambient * Light.Ambient;
 	//outDiffuse.a = 1.0;
-	outDiffuse.a = inDiffuse.a + Material.Diffuse.a;
+          
+    output.outDiffuse.a = input.inDiffuse.a + Material.Diffuse.a;
+
+    return output;
 
 }
-

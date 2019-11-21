@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="シェーダーファイル">
+      <UniqueIdentifier>{b40b5290-74ce-4faa-906a-b2aba2b6bdf3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -170,10 +173,10 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="pixelShader.hlsl">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>シェーダーファイル</Filter>
     </FxCompile>
     <FxCompile Include="vertexShader.hlsl">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>シェーダーファイル</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

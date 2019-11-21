@@ -37,7 +37,7 @@ void CRenderer::Init()
 	// デバイス、スワップチェーン、コンテキスト生成
 	DXGI_SWAP_CHAIN_DESC sd;
 	ZeroMemory( &sd, sizeof( sd ) );
-	sd.BufferCount = 1;
+	sd.BufferCount = 2;
 	sd.BufferDesc.Width = SCREEN_WIDTH;
 	sd.BufferDesc.Height = SCREEN_HEIGHT;
 	sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -114,7 +114,7 @@ void CRenderer::Init()
 	// ラスタライザステート設定
 	D3D11_RASTERIZER_DESC rd; 
 	ZeroMemory( &rd, sizeof( rd ) );
-	rd.FillMode = D3D11_FILL_SOLID; 
+	rd.FillMode = D3D11_FILL_SOLID; //Debug D3D11_FILL_WIREFRAME
 	rd.CullMode = D3D11_CULL_BACK; 
 	rd.DepthClipEnable = TRUE; 
 	rd.MultisampleEnable = FALSE; 
@@ -208,7 +208,8 @@ void CRenderer::Init()
 			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 			{ "NORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 4 * 3, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 			{ "COLOR",    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 4 * 6, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 4 * 10, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+			{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 4 * 10, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+
 		};
 		UINT numElements = ARRAYSIZE(layout);
 
