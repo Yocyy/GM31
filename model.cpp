@@ -21,9 +21,9 @@ void CModel::Draw()
 		CRenderer::SetTexture( m_SubsetArray[i].Material.Texture );
 
 		// ƒ|ƒŠƒSƒ“•`‰æ
-		//CRenderer::DrawIndexed( m_SubsetArray[i].IndexNum, m_SubsetArray[i].StartIndex, 0 );
-		CRenderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		CRenderer::GetDeviceContext()->DrawIndexedInstanced(m_SubsetArray[i].IndexNum, 9, m_SubsetArray[i].StartIndex, 0, 0);//10000‚ð“¯Žž‚É•`‰æ
+		CRenderer::DrawIndexed( m_SubsetArray[i].IndexNum, m_SubsetArray[i].StartIndex, 0 );
+		//CRenderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		//CRenderer::GetDeviceContext()->DrawIndexedInstanced(m_SubsetArray[i].IndexNum, 9, m_SubsetArray[i].StartIndex, 0, 0);//10000‚ð“¯Žž‚É•`‰æ
 	}
 
 }

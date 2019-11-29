@@ -11,6 +11,7 @@ public:
 	static void Update();
 	static void Draw();
 	static CScene* GetScene();
+
 	template<typename T>
 	static void SetScene()
 	{

@@ -462,6 +462,7 @@ void CRenderer::SetTexture( CTexture* Texture )
 {
 
 	ID3D11ShaderResourceView* srv[1] = { Texture->GetShaderResourceView() };
+
 	m_ImmediateContext->PSSetShaderResources( 0, 1, srv );
 
 }

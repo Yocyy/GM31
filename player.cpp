@@ -106,7 +106,8 @@ void CPlayer::Update()
 	//	XMStoreFloat3(&g_right, vec);
 	//}
 
-	if (CInput::GetKeyPress(WM_LBUTTONDOWN))//マウス左クリックWM_LBUTTONDOWN
+	if (CInput::GetKeyTrigger
+	(WM_LBUTTONDOWN))//マウス左クリックWM_LBUTTONDOWN
 	{
 		CScene* scene = CManager::GetScene();
 		CBullet* bullet = scene->AddGameObject<CBullet>(Layer3D_MODEL);

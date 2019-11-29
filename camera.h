@@ -21,7 +21,9 @@ public:
 	void Update();
 	void Draw();
 	void Set_Player(CPlayer* player);
+	XMMATRIX Get_Camera_ViewMatrix();
 	XMMATRIX Get_Camera_InvViewMatrix();
+	XMMATRIX Get_Camera_Projection();
 	bool GetVisibility(XMFLOAT3 Position , float Radius);
 };
 

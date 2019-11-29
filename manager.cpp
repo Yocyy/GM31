@@ -14,6 +14,8 @@
 #include "player.h"
 #include "enemy.h"
 #include "bullet.h"
+#include "result.h"
+
 
 CScene* CManager::scene = nullptr;
 void CManager::Init()
@@ -57,6 +59,3 @@ CScene * CManager::GetScene()
 {
 	return scene;
 }
-
-
-

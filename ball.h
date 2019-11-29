@@ -10,6 +10,7 @@
 
 struct VECTOR3 {
 	float x, y, z;
+
 	template<class Archive>
 	void serialize(Archive& archive)
 	{

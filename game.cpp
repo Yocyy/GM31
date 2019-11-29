@@ -16,12 +16,14 @@
 #include "enemy.h"
 #include "bullet.h"
 #include "ball.h"
+#include "judgement.h"
 
+static bool flag_result;
 void CGame::Init()
 {
 	ShowCursor(false);
-
 	AddGameObject<CCamera>(Layer3D_CAMERA);
+	AddGameObject<CJudgement>(Layer3D_CAMERA);
 	AddGameObject<CField>(Layer3D_MODEL);
 	AddGameObject<CWall>(Layer3D_MODEL);
 	AddGameObject<CPlayer>(Layer3D_MODEL);
@@ -33,6 +35,8 @@ void CGame::Init()
 	bgm = new CAudioClip();
 	bgm->Load("asset/sound/BGM/a.wav");
 	bgm->Play(true);
+
+	flag_result = false;
 
 }
 
@@ -48,8 +52,17 @@ void CGame::Update()
 {
 	CScene::Update();
 
+	if (flag_result)
+	{
+		CManager::SetScene<CResult>();
+	}
 	if (CInput::GetKeyTrigger(VK_RETURN))
 	{
 		CManager::SetScene<CResult>();
 	}
+}
+
+void CGame::test()
+{
+	flag_result = true;
 }

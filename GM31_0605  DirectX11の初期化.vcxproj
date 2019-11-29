@@ -158,7 +158,9 @@
   <ItemGroup>
     <ClInclude Include="audio_clip.h" />
     <ClInclude Include="ball.h" />
+    <ClInclude Include="billboard.h" />
     <ClInclude Include="bullet.h" />
+    <ClInclude Include="bullet_billboard.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="enemy.h" />
@@ -166,12 +168,14 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="game_object.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="judgement.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="manager.h" />
     <ClInclude Include="mesh_field.h" />
     <ClInclude Include="model.h" />
     <ClInclude Include="modelAnimation.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="PointLight.h" />
     <ClInclude Include="polygon.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="result.h" />
@@ -186,19 +190,23 @@
   <ItemGroup>
     <ClCompile Include="audio_clip.cpp" />
     <ClCompile Include="ball.cpp" />
+    <ClCompile Include="billboard.cpp" />
     <ClCompile Include="bullet.cpp" />
+    <ClCompile Include="bullet_billborad.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="field.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="judgement.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="manager.cpp" />
     <ClCompile Include="mesh_field.cpp" />
     <ClCompile Include="model.cpp" />
     <ClCompile Include="modelAnimation.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="polygon.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="result.cpp" />

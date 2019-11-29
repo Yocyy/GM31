@@ -38,5 +38,11 @@ float4 main(PS_IN input) : SV_Target
     outDiffuse = g_Texture.Sample(g_SamplerState, input.inTexCoord);
 
     outDiffuse *= input.inDiffuse;
+    
+    if (outDiffuse.w < 0.5f)
+    {
+        discard;
+    }
+    
     return outDiffuse;
 }

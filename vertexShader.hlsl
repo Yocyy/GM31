@@ -53,7 +53,7 @@ struct VS_IN
     float4 inNormal : NORMAL0;
     float4 inDiffuse : COLOR0;
     float2 inTexCoord : TEXCOORD0;
-    uint inInstanceID : SV_InstanceID;
+    //uint inInstanceID : SV_InstanceID;
 };
 
 struct VS_OUT
@@ -72,8 +72,8 @@ VS_OUT main(VS_IN input)
     VS_OUT output;
     matrix wvp;
 
-    input.inPosition.x += input.inInstanceID % 3;
-    input.inPosition.z += input.inInstanceID / 3;
+    //input.inPosition.x += input.inInstanceID % 3;
+    //input.inPosition.z += input.inInstanceID / 3;
 
     wvp = mul(World, View);
     wvp = mul(wvp, Projection);
@@ -94,7 +94,6 @@ VS_OUT main(VS_IN input)
 	//outDiffuse.a = 1.0;
           
     output.outDiffuse.a = input.inDiffuse.a + Material.Diffuse.a;
-
     return output;
 
 }

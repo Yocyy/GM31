@@ -1,6 +1,7 @@
 #include "main.h"
 #include "manager.h"
-#include <queue>
+
+
 const char* CLASS_NAME = "DX11AppClass";
 const char* WINDOW_NAME = "DX11";
 

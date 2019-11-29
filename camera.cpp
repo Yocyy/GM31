@@ -164,9 +164,19 @@ void CCamera::Set_Player(CPlayer * player)
 	m_Player = player;
 }
 
+XMMATRIX CCamera::Get_Camera_ViewMatrix()
+{
+	return  XMLoadFloat4x4(&m_ViewMatrix);
+}
+
 XMMATRIX CCamera::Get_Camera_InvViewMatrix()
 {
 	return XMLoadFloat4x4(&m_InvViewMatrix);
+}
+
+XMMATRIX CCamera::Get_Camera_Projection()
+{
+	return XMLoadFloat4x4(&m_ProjectionMatrix);
 }
 
 bool CCamera::GetVisibility(XMFLOAT3 Position, float Radius)
