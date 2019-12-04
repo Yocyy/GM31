@@ -6,6 +6,7 @@
 #include "game_object.h"
 #include "camera.h"
 #include "billboard.h"
+#include "stb-texture.h"
 
 //-------------------------------------------------------------------//
 //							\‘¢‘Ì’è‹`								 //
@@ -111,7 +112,7 @@ void CBillboard::Bill_Create(XMFLOAT3 Position, const char* FilePass)
 	m_Position = Position;
 	m_Front = XMFLOAT3(0, 0, 0);
 
-	m_Texture = new CTexture();
+	m_Texture = new CStbTexture();
 	m_Texture->Load(FilePass);
 }
 
@@ -122,6 +123,6 @@ void CBillboard::Bill_Create(XMFLOAT3 Position, XMFLOAT3 Front, float Speed, con
 	m_Front = Front;
 	MoveSpeed = Speed;
 
-	m_Texture = new CTexture();
+	m_Texture = new CStbTexture();
 	m_Texture->Load(FilePass);
 }

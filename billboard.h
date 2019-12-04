@@ -6,11 +6,12 @@ typedef struct BILLBOARD_tag {
 	int Animation_Count;
 }BILLBOARD;
 
+class CStbTexture;
 class CBillboard : public CGameObject
 {
 private:
 	ID3D11Buffer* m_VertexBuffer = NULL;
-	CTexture* m_Texture = NULL;
+	CStbTexture* m_Texture = NULL;
 	XMMATRIX View;
 	XMMATRIX invView;
 	VERTEX_3D vertex[4];

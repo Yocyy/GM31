@@ -9,16 +9,16 @@
 #include "scene.h"
 #include "manager.h"
 #include "player.h"
-#include "bullet.h"
+#include "BulletManager.h"
 
 static float MoveSpeed = 0.1f;
 static float RotationSpeed = 0.1f;
 
 
-
-
 void CPlayer::Init()
 {
+	circle = new CIRCLE();
+	circle->radius = m_kCircleSize;
 	m_Model = new CModel();
 	m_AudioClip = new CAudioClip();
 	m_Position = XMFLOAT3(0.0f, 0.0f, 0.0f);
@@ -46,7 +46,7 @@ void CPlayer::Draw()
 
 void CPlayer::Update()
 {
-
+	circle->Pos = m_Position;
 	////////////////////////////////////////////////////////
 	////				移 動
 	////////////////////////////////////////////////////////
@@ -73,44 +73,9 @@ void CPlayer::Update()
 		m_Position.z -= MoveSpeed * g_right.z;
 	}
 
-
-	///////////////////////////////////////////////////////
-	////				回 転
-	///////////////////////////////////////////////////////
-	//if (GetKeyState('Q') & 0x8000) {
-	//	// Qキーが押されている時の処理
-	//	m_Rotation.y -= RotationSpeed;
-
-	//	XMVECTOR vec;
-	//	XMMATRIX mtx;
-	//	mtx = XMMatrixRotationY(-RotationSpeed);
-	//	vec = XMVector3TransformNormal(XMLoadFloat3(&g_front), mtx);
-	//	XMStoreFloat3(&g_front, vec);
-
-	//	mtx = XMMatrixRotationY(-RotationSpeed);
-	//	vec = XMVector3TransformNormal(XMLoadFloat3(&g_right), mtx);
-	//	XMStoreFloat3(&g_right, vec);
-	//}
-	//if (GetKeyState('E') & 0x8000) {
-	//	// Eキーが押されている時の処理
-	//	m_Rotation.y += RotationSpeed;
-
-	//	XMVECTOR vec;
-	//	XMMATRIX mtx;
-	//	mtx = XMMatrixRotationY(RotationSpeed);
-	//	vec = XMVector3TransformNormal(XMLoadFloat3(&g_front), mtx);
-	//	XMStoreFloat3(&g_front, vec);
-
-	//	mtx = XMMatrixRotationY(RotationSpeed);
-	//	vec = XMVector3TransformNormal(XMLoadFloat3(&g_right), mtx);
-	//	XMStoreFloat3(&g_right, vec);
-	//}
-
-	if (CInput::GetKeyTrigger
-	(WM_LBUTTONDOWN))//マウス左クリックWM_LBUTTONDOWN
+	if (CInput::GetKeyTrigger(WM_LBUTTONDOWN))//マウス左クリックWM_LBUTTONDOWN
 	{
-		CScene* scene = CManager::GetScene();
-		CBullet* bullet = scene->AddGameObject<CBullet>(Layer3D_MODEL);
+		CManager::GetScene()->GetGameObject<CBulletManager>(Layer3D_Manager)->CreateBullet(m_Position, g_front, BULLET_TYPE::zero);
 		m_AudioClip->Play();
 	}
 
@@ -118,10 +83,10 @@ void CPlayer::Update()
 	if (CInput::GetKeyTrigger(VK_SPACE) && !jump_flag)
 	{
 		jump_flag = true;
-		velocity.y = JUMP_FORCE;
+		velocity.y = m_kJumpforce;
 	}
 	//重力計算(質量×重力)
-	velocity.y -= MASS * GRAVITE;
+	velocity.y -= m_kMass * m_kGravite;
 
 	m_Position.y += velocity.y;
 

@@ -1,12 +1,11 @@
-#ifndef ENEMY_H_
-#define ENEMY_H_
+#pragma
 #include "collision.h"
 #include "modelAnimation.h"
-#define ENEMY_RADIUS (1)
 
 class CEnemy : public CGameObject
 {
 private:
+	constexpr static float m_kCircleSize{1.0f};
 	CModelAnimation* m_Model;
 	bool flag_move;
 	int ModelFrame = 0;
@@ -19,5 +18,3 @@ public:
 	XMFLOAT3 GetPosition();
 	CIRCLE* circle;
 };
-
-#endif // !ENEMY_H_

@@ -52,10 +52,6 @@ void CBullet_Billboard::Init()
 
 void CBullet_Billboard::Update()
 {
-	// 進行方向
-	//m_Position.x += MoveSpeed * m_Front.x;
-	//m_Position.y += MoveSpeed * m_Front.y;
-	//m_Position.z += MoveSpeed * m_Front.z;
 	////サイズ
 	m_Scale.x *= 0.9f;
 	m_Scale.y *= 0.9f;
@@ -65,8 +61,6 @@ void CBullet_Billboard::Update()
 	if (Count >= 30)
 	{
 		CManager::GetScene()->DestroyGameObject(this);
-		//this->Uninit()
-
 	}
 }
 
@@ -105,17 +99,14 @@ void CBullet_Billboard::Draw()
 void CBullet_Billboard::Uninit()
 {
 	m_VertexBuffer->Release();
-	m_Texture->Unload();
-	delete m_Texture;
 }
 
-void CBullet_Billboard::Bill_Create(XMFLOAT3 Position, XMFLOAT3 Front, float Speed, const char * FilePass)
+void CBullet_Billboard::Bill_Create(XMFLOAT3 Position, XMFLOAT3 Front, float Speed, CStbTexture* StbTexture)
 {
 	Count = 0;
 	m_Position = Position;
 	m_Front = Front;
 	MoveSpeed = Speed;
 
-	m_Texture = new CTexture();
-	m_Texture->Load(FilePass);
+	m_Texture = StbTexture;
 }

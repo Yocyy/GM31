@@ -13,6 +13,8 @@
 #include "game.h"
 #include "billboard.h"
 #include "result.h"
+#include "enemyAI.h"
+#include "player.h"
 
 void CJudgement::Init()
 {
@@ -21,13 +23,23 @@ void CJudgement::Init()
 
 void CJudgement::Update()
 {
-	////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
 ////		当たり判定
 ////////////////////////////////////////////////////////////
+
+	//単体のオブジェクト
+	CPlayer* player;
+	player = CManager::GetScene()->GetGameObject<CPlayer>(Layer3D_MODEL);
+
+	//複数のオブジェクト
 	std::vector<CEnemy*> enemys;
 	enemys = CManager::GetScene()->GetGameObjects<CEnemy>(Layer3D_MODEL);
+	std::vector<CEnemyAI*> enemyAIs;
+	enemyAIs = CManager::GetScene()->GetGameObjects<CEnemyAI>(Layer3D_MODEL);
 	std::vector<CBullet*> bullets;
-	bullets = CManager::GetScene()->GetGameObjects<CBullet>(Layer3D_MODEL);
+	bullets = CManager::GetScene()->GetGameObjects<CBullet>(Layer3D_EFFECT);
+
+	//bullet と enemy
 	for (CEnemy* enemy : enemys)
 	{
 		for (CBullet* bullet : bullets)
@@ -43,11 +55,21 @@ void CJudgement::Update()
 				CManager::GetScene()->DestroyGameObject(enemy);
 				CManager::GetScene()->DestroyGameObject(bullet);
 				Result_Cnt++;
-				return;
 			}
 		}
 	}
 
+	//player と enemyAI
+	for (CEnemyAI* enemyAI : enemyAIs)
+	{
+		XMFLOAT3 enemyAIPos = enemyAI->GetPosition();
+		enemyAI->moveflag = false;
+
+		if (Collision_IsHitCircle(enemyAI->circle, player->circle))
+		{
+			enemyAI->moveflag = true;
+		}
+	}
 
 
 	if (Result_Cnt >= 3)
@@ -55,6 +77,7 @@ void CJudgement::Update()
 		CGame::test();
 	}
 
+	return;
 }
 
 void CJudgement::Draw()

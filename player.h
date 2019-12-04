@@ -1,14 +1,17 @@
-#ifndef PLAYER_H_
-#define PLAYER_H_
+#pragma once
+#include "collision.h"
 
-#define GRAVITE (9.8)
-#define MASS (0.0005)
-#define JUMP_FORCE (0.15)
 class CAudioClip;
 class CModel;
+class CBulletManager;
 class CPlayer : public CGameObject
 {
 private:
+	constexpr static float m_kGravite{ 9.8f };
+	constexpr static float m_kMass{ 0.0005f };
+	constexpr static float m_kJumpforce{ 0.15f };
+	constexpr static float m_kCircleSize{ 1.0f };
+
 	CModel* m_Model;
 	CAudioClip* m_AudioClip;
 	bool jump_flag;
@@ -24,6 +27,5 @@ public:
 	XMFLOAT3 Get_Player_Position();
 	XMFLOAT3 Get_Player_Rotation();
 	XMFLOAT3 Get_Player_Front();
+	CIRCLE* circle;
 };
-
-#endif // !PLAYER_H_

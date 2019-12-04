@@ -17,11 +17,14 @@
 #include "bullet.h"
 #include "ball.h"
 #include "judgement.h"
+#include "BulletManager.h"
+#include "enemyAI.h"
 
 static bool flag_result;
 void CGame::Init()
 {
 	ShowCursor(false);
+	AddGameObject<CBulletManager>(Layer3D_Manager);
 	AddGameObject<CCamera>(Layer3D_CAMERA);
 	AddGameObject<CJudgement>(Layer3D_CAMERA);
 	AddGameObject<CField>(Layer3D_MODEL);
@@ -31,6 +34,7 @@ void CGame::Init()
 	AddGameObject<CEnemy>(Layer3D_MODEL);
 	AddGameObject<CEnemy>(Layer3D_MODEL);
 	AddGameObject<CBall>(Layer3D_MODEL);
+	AddGameObject<CEnemyAI>(Layer3D_MODEL);
 
 	bgm = new CAudioClip();
 	bgm->Load("asset/sound/BGM/a.wav");

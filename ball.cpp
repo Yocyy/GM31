@@ -21,7 +21,7 @@ void CBall::Init()
 	circle = new CIRCLE;
 	m_Model = new CModel;
 	flag_move = false;
-	m_Position = XMFLOAT3(float(rand() % 10), 1.0f, 5.0f);
+	m_Position = XMFLOAT3(0.0f, 1.0f, 5.0f);
 	m_Rotation = XMFLOAT3(0.0f, 0.0f, 0.0f);	//float(rand() % 10)
 	m_Scale = XMFLOAT3(1.0f, 1.0f, 1.0f);
 
@@ -119,7 +119,7 @@ void CBall::Update()
 		m_Position.x -= MoveSpeed;
 	}
 
-	CField* m_Field = CManager::GetScene()->GetGameObject<CField>(1);
+	CField* m_Field = CManager::GetScene()->GetGameObject<CField>(2);
 	m_Position.y = m_Field->GetHeight(m_Position) + 0.5f;
 	circle->Pos = m_Position;
 }

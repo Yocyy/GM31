@@ -9,6 +9,7 @@
 enum Layer
 {
 	Layer_min = -1,
+	Layer3D_Manager,
 	Layer3D_CAMERA,
 	Layer3D_MODEL,
 	Layer3D_EFFECT,

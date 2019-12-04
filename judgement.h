@@ -1,6 +1,4 @@
-#ifndef JUDGEMENT_H_
-#define JUDGEMENT_H_
-
+#pragma once
 class CJudgement : public CGameObject
 {
 private:
@@ -11,6 +9,3 @@ public:
 	void Draw();
 	void Uninit();
 };
-
-#endif // !JUDGEMENT_H_
-

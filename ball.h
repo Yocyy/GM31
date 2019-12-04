@@ -1,6 +1,4 @@
 #pragma once
-#ifndef BALL_H_
-#define BALL_H_
 #include "collision.h"
 //c++シリアライズ用インクルード
 #include "cereal/cereal.hpp"
@@ -39,5 +37,3 @@ public:
 	void Draw();
 	CIRCLE* circle;
 };
-
-#endif // !BALL_H_

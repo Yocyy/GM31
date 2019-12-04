@@ -3,25 +3,31 @@
 
 #include "collision.h"
 
-#define BULLET_RADIUS (1)
-#define BULLET_SPEED (0.5)
+constexpr float g_kBulletCircleSize(1);
 class CModel;
 class CTexture;
 class CBillboard;
+class CStbTexture;
 class CBullet : public CGameObject
 {
 private:
+	constexpr static float m_kBulletSpeed{ 0.5f };
+
 	CModel* m_Model;
-	//CTexture* m_Texture;
-	//CBillboard* m_Billboard;
+	CStbTexture* m_Texture;
 	XMFLOAT3 g_front, g_right;
 	float Bullet_Speed;
+	const char* m_FileName;
 public:
+	//CBullet();
+	//CBullet(CStbTexture* texture,XMFLOAT3 Position, XMFLOAT3 vec);
+	//~CBullet();
 	void Init();
 	void Uninit();
 	void Update();
 	void Draw();
 	CIRCLE* circle;
+	void SetBullet(CStbTexture* texture, XMFLOAT3 Position, XMFLOAT3 vec);
 };
 
 #endif // !BULLET_H_

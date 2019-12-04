@@ -5,11 +5,12 @@ typedef struct BILLBOARD_tag {
 	int Animation_Count;
 }BILLBOARD;
 
+class CStbTexture;
 class CBullet_Billboard : public CGameObject
 {
 private:
 	ID3D11Buffer* m_VertexBuffer = NULL;
-	CTexture* m_Texture = NULL;
+	CStbTexture* m_Texture = NULL;
 	XMMATRIX View;
 	XMMATRIX invView;
 	VERTEX_3D vertex[4];
@@ -19,10 +20,9 @@ private:
 	int Count;
 	XMFLOAT3 m_Front;
 public:
-	void Bill_Create(XMFLOAT3 Position, XMFLOAT3 Front, float Speed, const char* FilePass);
+	void Bill_Create(XMFLOAT3 Position, XMFLOAT3 Front, float Speed, CStbTexture* StbTexture);
 	void Init();
 	void Uninit();
 	void Update();
 	void Draw();
-	//	void SetTexture(CTexture* texture);
 };

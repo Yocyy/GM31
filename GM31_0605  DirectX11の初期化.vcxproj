@@ -73,28 +73,28 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)include;C:\Users\naruw\source\3rd grade\GM31\GM31_1204 AssimpAnimation\assimp_libraries\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)lib\x86;$(LibraryPath);C:\Users\naruw\source\3rd grade\GM31\GM31_1204 AssimpAnimation\assimp_libraries\lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)include;C:\Users\naruw\source\3rd grade\GM31\GM31_1204 AssimpAnimation\assimp_libraries\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)lib\x64;$(LibraryPath);C:\Users\naruw\source\3rd grade\GM31\GM31_1204 AssimpAnimation\assimp_libraries\lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)include;C:\Users\naruw\source\3rd grade\GM31\GM31_1204 AssimpAnimation\assimp_libraries\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)lib\x86;$(LibraryPath);C:\Users\naruw\source\3rd grade\GM31\GM31_1204 AssimpAnimation\assimp_libraries\lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)include;C:\Users\naruw\source\3rd grade\GM31\GM31_1204 AssimpAnimation\assimp_libraries\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)lib\x64;$(LibraryPath);C:\Users\naruw\source\3rd grade\GM31\GM31_1204 AssimpAnimation\assimp_libraries\lib</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -103,12 +103,13 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -117,12 +118,13 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -135,12 +137,13 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -153,6 +156,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -160,10 +164,12 @@
     <ClInclude Include="ball.h" />
     <ClInclude Include="billboard.h" />
     <ClInclude Include="bullet.h" />
+    <ClInclude Include="BulletManager.h" />
     <ClInclude Include="bullet_billboard.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="enemy.h" />
+    <ClInclude Include="enemyAI.h" />
     <ClInclude Include="field.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="game_object.h" />
@@ -182,6 +188,7 @@
     <ClInclude Include="scene.h" />
     <ClInclude Include="ShakeCamera.h" />
     <ClInclude Include="skydome.h" />
+    <ClInclude Include="stb-texture.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="title.h" />
     <ClInclude Include="tuto.h" />
@@ -192,10 +199,12 @@
     <ClCompile Include="ball.cpp" />
     <ClCompile Include="billboard.cpp" />
     <ClCompile Include="bullet.cpp" />
+    <ClCompile Include="BulletManager.cpp" />
     <ClCompile Include="bullet_billborad.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="enemy.cpp" />
+    <ClCompile Include="enemyAI.cpp" />
     <ClCompile Include="field.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="input.cpp" />
@@ -212,6 +221,7 @@
     <ClCompile Include="result.cpp" />
     <ClCompile Include="ShakeCamera.cpp" />
     <ClCompile Include="skydome.cpp" />
+    <ClCompile Include="stb-texture.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="title.cpp" />
     <ClCompile Include="tuto.cpp" />

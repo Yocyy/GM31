@@ -16,7 +16,7 @@ void CEnemy::Init()
 	m_Position = XMFLOAT3(float(rand() % 10), 1.0f, 5.0f);
 	m_Rotation = XMFLOAT3(0.0f, 0.0f, 0.0f);	//float(rand() % 10)
 	m_Scale = XMFLOAT3(1.0f, 1.0f, 1.0f);
-	circle->radius = ENEMY_RADIUS;
+	circle->radius = m_kCircleSize;
 
 	m_Model->Load("asset/human_2.fbx");//Models/unitychan.fbx
 }

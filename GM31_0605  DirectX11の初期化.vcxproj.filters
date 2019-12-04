@@ -16,6 +16,15 @@
     <Filter Include="シェーダーファイル">
       <UniqueIdentifier>{b40b5290-74ce-4faa-906a-b2aba2b6bdf3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SH31">
+      <UniqueIdentifier>{72f375d8-6775-45bc-b39c-4fb9ab514a66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource">
+      <UniqueIdentifier>{5a8df290-7b43-44fd-9625-8f33c2281861}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource\stb">
+      <UniqueIdentifier>{2ccb0dc9-7caa-4ce7-886b-0a5e961c0c89}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -30,16 +39,10 @@
     <ClInclude Include="renderer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="texture.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="polygon.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="wall.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="model.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="input.h">
@@ -75,9 +78,6 @@
     <ClInclude Include="field.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="audio_clip.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="game.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -88,9 +88,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="tuto.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="modelAnimation.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="ball.h">
@@ -105,8 +102,29 @@
     <ClInclude Include="bullet_billboard.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="stb-texture.h">
+      <Filter>resource\stb</Filter>
+    </ClInclude>
+    <ClInclude Include="model.h">
+      <Filter>resource</Filter>
+    </ClInclude>
+    <ClInclude Include="modelAnimation.h">
+      <Filter>resource</Filter>
+    </ClInclude>
+    <ClInclude Include="audio_clip.h">
+      <Filter>resource</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
     <ClInclude Include="PointLight.h">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="texture.h">
+      <Filter>resource</Filter>
+    </ClInclude>
+    <ClInclude Include="enemyAI.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -122,16 +140,10 @@
     <ClCompile Include="renderer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="texture.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="polygon.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="wall.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="model.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="input.cpp">
@@ -161,9 +173,6 @@
     <ClCompile Include="field.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="audio_clip.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="game.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -176,12 +185,6 @@
     <ClCompile Include="tuto.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="modelAnimation.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ball.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="billboard.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -192,6 +195,30 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="PointLight.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="stb-texture.cpp">
+      <Filter>resource\stb</Filter>
+    </ClCompile>
+    <ClCompile Include="ball.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="audio_clip.cpp">
+      <Filter>resource</Filter>
+    </ClCompile>
+    <ClCompile Include="model.cpp">
+      <Filter>resource</Filter>
+    </ClCompile>
+    <ClCompile Include="modelAnimation.cpp">
+      <Filter>resource</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="texture.cpp">
+      <Filter>resource</Filter>
+    </ClCompile>
+    <ClCompile Include="enemyAI.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
