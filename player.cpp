@@ -1,6 +1,6 @@
 #include "main.h"
 #include "game_object.h"
-#include "texture.h"
+#include "stb-texture.h"
 #include "renderer.h"
 #include "input.h"
 #include "audio_clip.h"

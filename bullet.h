@@ -5,7 +5,6 @@
 
 constexpr float g_kBulletCircleSize(1);
 class CModel;
-class CTexture;
 class CBillboard;
 class CStbTexture;
 class CBullet : public CGameObject
@@ -19,9 +18,6 @@ private:
 	float Bullet_Speed;
 	const char* m_FileName;
 public:
-	//CBullet();
-	//CBullet(CStbTexture* texture,XMFLOAT3 Position, XMFLOAT3 vec);
-	//~CBullet();
 	void Init();
 	void Uninit();
 	void Update();

@@ -27,6 +27,5 @@ public:
 	void Uninit();
 	void Update();
 	void Draw();
-//	void SetTexture(CTexture* texture);
 };
 #endif //_BILLBOARD_H_

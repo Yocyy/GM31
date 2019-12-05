@@ -2,7 +2,7 @@
 #include "main.h"
 #include "renderer.h"
 #include "game_object.h"
-#include "texture.h"
+#include "stb-texture.h"
 #include "field.h"
 
 
@@ -108,7 +108,7 @@ void CField::Init()
 
 
 
-	m_Texture = new CTexture();
+	m_Texture = new CStbTexture();
 	m_Texture->Load("asset/field004.tga");
 		
 

@@ -1,6 +1,6 @@
 #include "main.h"
 #include "renderer.h"
-#include "texture.h"
+#include "stb-texture.h"
 #include "model.h"
 
 void CModel::Draw()
@@ -84,7 +84,7 @@ void CModel::Load( const char *FileName )
 
 			m_SubsetArray[i].Material.Material = model.SubsetArray[i].Material.Material;
 
-			m_SubsetArray[i].Material.Texture = new CTexture();
+			m_SubsetArray[i].Material.Texture = new CStbTexture();
 			m_SubsetArray[i].Material.Texture->Load( model.SubsetArray[i].Material.TextureName );
 
 		}
@@ -269,7 +269,7 @@ void CModel::LoadObj( const char *FileName, MODEL *Model )
 			//テクスチャ座標
 			fscanf( file, "%f", &texcoord->x );
 			fscanf( file, "%f", &texcoord->y );
-			//texcoord->y = 1.0f - texcoord->y;
+			texcoord->y = 1.0f - texcoord->y;
 			texcoord++;
 		}
 		else if( strcmp( str, "usemtl" ) == 0 )

@@ -1,7 +1,7 @@
 #include "main.h"
 #include "scene.h"
 #include "manager.h"
-#include "texture.h"
+#include "stb-texture.h"
 #include "renderer.h"
 #include "game_object.h"
 #include "camera.h"

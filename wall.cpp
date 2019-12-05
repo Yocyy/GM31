@@ -1,5 +1,5 @@
 #include "main.h"
-#include "texture.h"
+#include "stb-texture.h"
 #include "renderer.h"
 #include "game_object.h"
 #include "wall.h"
@@ -63,7 +63,7 @@ void CWall::Init()
 	ZeroMemory(&sd, sizeof(sd));
 	sd.pSysMem = vertex;	// 最初の頂点を格納
 	CRenderer::GetDevice()->CreateBuffer(&bd, &sd, &m_VertexBuffer);
-	m_Texture = new CTexture();
+	m_Texture = new CStbTexture();
 	m_Texture->Load("asset/Wall_01.tga");	// tgaフォーマットのαチャンネル付き圧縮しない。
 }
 

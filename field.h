@@ -6,7 +6,7 @@ private:
 
 	ID3D11Buffer*	m_VertexBuffer = NULL;
 	ID3D11Buffer*	m_IndexBuffer = NULL;
-	CTexture*		m_Texture = NULL;
+	CStbTexture*		m_Texture = NULL;
 
 
 	static const int FIELD_X = 128;

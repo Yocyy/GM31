@@ -5,7 +5,7 @@ class CTuto : public CScene
 {
 private:
 	CAudioClip* bgm;
-	CTexture* m_Texture = NULL;
+	CStbTexture* m_Texture = NULL;
 public:
 	void Init();
 	void Uninit();

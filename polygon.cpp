@@ -1,6 +1,6 @@
 #include "main.h"
 #include "renderer.h"
-#include "texture.h"
+#include "stb-texture.h"
 #include "input.h"
 #include "game_object.h"
 #include "polygon.h"
@@ -87,7 +87,7 @@ void CPolygon::Draw()
 	CRenderer::GetDeviceContext()->Draw(4, 0);	//	ƒ|ƒŠƒSƒ“•`‰æ
 }
 
-void CPolygon::SetTexture(CTexture* texture)
+void CPolygon::SetTexture(CStbTexture* texture)
 {
 	m_Texture = texture;
 }

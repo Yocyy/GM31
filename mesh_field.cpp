@@ -1,5 +1,5 @@
 #include "main.h"
-#include "texture.h"
+#include "stb-texture.h"
 #include "renderer.h"
 #include "game_object.h"
 #include "mesh_field.h"
@@ -117,7 +117,7 @@ void CMesh_Field::Init()
 		delete[] pIndex;
 
 	}
-		m_Texture = new CTexture();
+		m_Texture = new CStbTexture();
 		m_Texture->Load("asset/field004.tga");	// tgaフォーマットのαチャンネル付き圧縮しない。
 
 }

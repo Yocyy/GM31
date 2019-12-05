@@ -47,7 +47,7 @@ struct MATERIAL
 struct DX11_MODEL_MATERIAL
 {
 	MATERIAL		Material;
-	class CTexture*	Texture;
+	class CStbTexture*	Texture;
 };
 
 
@@ -77,9 +77,7 @@ struct LIGHT
 
 class CVertexBuffer;
 class CIndexBuffer;
-class CTexture;
 class CStbTexture;
-
 
 class CRenderer
 {
@@ -129,7 +127,6 @@ public:
 	//static void SetLight1(ConstantBuffer cb);
 	static void SetVertexBuffers(ID3D11Buffer* VertexBuffer);
 	static void SetIndexBuffer(ID3D11Buffer* IndexBuffer);
-	static void SetTexture(CTexture* Texture);
 	static void SetTexture(CStbTexture* Texture);
 	static void DrawIndexed(unsigned int IndexCount, unsigned int StartIndexLocation, int BaseVertexLocation);
 

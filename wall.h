@@ -5,7 +5,7 @@ class CWall : public CGameObject
 {
 public:
 	ID3D11Buffer* m_VertexBuffer = NULL;
-	CTexture* m_Texture = NULL;
+	CStbTexture* m_Texture = NULL;
 public:
 	void Init();
 	void Uninit();

@@ -8,6 +8,7 @@
 #include "title.h"
 #include "manager.h"
 #include "tuto.h"
+#include "stb-texture.h"
 
 void CTitle::Init()
 {
@@ -16,7 +17,7 @@ void CTitle::Init()
 	bgm = new CAudioClip();
 	bgm->Load("asset/sound/BGM/a.wav");
 	bgm->Play(true);
-	m_Texture = new CTexture();
+	m_Texture = new CStbTexture();
 	m_Texture->Load("asset/title.tga");	// tgaフォーマットのαチャンネル付き圧縮しない。
 	AddGameObject<CPolygon>(Layer2D_UI)->SetTexture(m_Texture);
 }

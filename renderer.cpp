@@ -1,7 +1,6 @@
 
 #include "main.h"
 #include "renderer.h"
-#include "texture.h"
 #include "stb-texture.h"
 #include <io.h>
 
@@ -468,14 +467,6 @@ void CRenderer::SetTexture( CStbTexture* Texture )
 
 }
 
-void CRenderer::SetTexture(CTexture* Texture)
-{
-
-	ID3D11ShaderResourceView* srv[1] = { Texture->GetShaderResourceView() };
-
-	m_ImmediateContext->PSSetShaderResources(0, 1, srv);
-
-}
 
 
 void CRenderer::DrawIndexed( unsigned int IndexCount, unsigned int StartIndexLocation, int BaseVertexLocation )

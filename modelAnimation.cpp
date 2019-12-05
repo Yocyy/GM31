@@ -1,6 +1,6 @@
 #include "main.h"
 #include "renderer.h"
-#include "texture.h"
+#include "stb-texture.h"
 #include "modelAnimation.h"
 
 void CModelAnimation::Draw(XMMATRIX matrix)

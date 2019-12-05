@@ -1,5 +1,5 @@
 #include "main.h"
-#include "texture.h"
+#include "stb-texture.h"
 #include "renderer.h"
 #include "game_object.h"
 #include "model.h"
