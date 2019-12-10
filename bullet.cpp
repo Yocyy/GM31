@@ -6,6 +6,8 @@
 #include "bullet.h"
 #include "bullet_billboard.h"
 #include "stb-texture.h"
+#include "Shader.h"
+#include "camera.h"
 
 void CBullet::Init()
 {
@@ -16,6 +18,9 @@ void CBullet::Init()
 	circle->radius = g_kBulletCircleSize;
 
 	Bullet_Speed = 5.0f;
+
+	m_Shader = new CShader();
+	m_Shader->Init(VS_CSO::Shader_3D, PS_CSO::Shader_3D);
 }
 
 
@@ -52,8 +57,21 @@ void CBullet::Draw()
 	world *= XMMatrixRotationRollPitchYaw(m_Rotation.x, m_Rotation.y, m_Rotation.z);
 	world *= XMMatrixTranslation(m_Position.x, m_Position.y, m_Position.z);
 
-	CRenderer::SetWorldMatrix(&world);
-	//m_Model->Draw();
+	XMFLOAT4X4 world4x4;
+	XMStoreFloat4x4(&world4x4, world);
+	m_Shader->SetWorldMatrix(&world4x4);
+	CRenderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	XMFLOAT4X4 viewmatrix4x4;
+	CCamera* camera = CManager::GetScene()->GetGameObject<CCamera>(Layer3D_CAMERA);
+	XMStoreFloat4x4(&viewmatrix4x4, camera->Get_Camera_ViewMatrix());
+	m_Shader->SetViewMatrix(&viewmatrix4x4);
+
+	XMFLOAT4X4 promatrix4x4;
+	XMStoreFloat4x4(&promatrix4x4, camera->Get_Camera_Projection());
+	m_Shader->SetProjectionMatrix(&promatrix4x4);
+
+	m_Shader->Set();
 }
 
 void CBullet::SetBullet(CStbTexture* texture, XMFLOAT3 Position, XMFLOAT3 vec)

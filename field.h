@@ -1,9 +1,10 @@
 #pragma once
 
+class CShader;
 class CField : public CGameObject
 {
 private:
-
+	CShader* m_Shader;
 	ID3D11Buffer*	m_VertexBuffer = NULL;
 	ID3D11Buffer*	m_IndexBuffer = NULL;
 	CStbTexture*		m_Texture = NULL;

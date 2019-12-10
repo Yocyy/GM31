@@ -3,6 +3,11 @@
 #include "renderer.h"
 #include "game_object.h"
 #include "wall.h"
+#include "camera.h"
+#include "manager.h"
+#include "scene.h"
+#include "Shader.h"
+
 #define VERTEX_BUEEFER (8)
 
 // XMとは
@@ -65,6 +70,9 @@ void CWall::Init()
 	CRenderer::GetDevice()->CreateBuffer(&bd, &sd, &m_VertexBuffer);
 	m_Texture = new CStbTexture();
 	m_Texture->Load("asset/Wall_01.tga");	// tgaフォーマットのαチャンネル付き圧縮しない。
+
+	m_Shader = new CShader();
+	m_Shader->Init(VS_CSO::Shader_3D, PS_CSO::Shader_3D);
 }
 
 void CWall::Uninit()
@@ -72,6 +80,9 @@ void CWall::Uninit()
 	m_VertexBuffer->Release();
 	m_Texture->Unload();
 	delete m_Texture;
+
+	m_Shader->Uninit();
+	delete m_Shader;
 }
 
 void CWall::Update()
@@ -89,7 +100,23 @@ void CWall::Draw()
 	world = XMMatrixScaling(0.1f, 0.1f, 0.1f);		//拡大縮小
 	world *= XMMatrixRotationRollPitchYaw(0.0f, 0.0f, 0.0f);		//回転
 	world *= XMMatrixTranslation(0.0f, 0.0f, 0.0f);		//移動
-	CRenderer::SetWorldMatrix(&world);
+	
+	XMFLOAT4X4 world4x4;
+	XMStoreFloat4x4(&world4x4, world);
+	m_Shader->SetWorldMatrix(&world4x4);
+	CRenderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	XMFLOAT4X4 viewmatrix4x4;
+	CCamera* camera = CManager::GetScene()->GetGameObject<CCamera>(Layer3D_CAMERA);
+	XMStoreFloat4x4(&viewmatrix4x4, camera->Get_Camera_ViewMatrix());
+	m_Shader->SetViewMatrix(&viewmatrix4x4);
+
+	XMFLOAT4X4 promatrix4x4;
+	XMStoreFloat4x4(&promatrix4x4, camera->Get_Camera_Projection());
+	m_Shader->SetProjectionMatrix(&promatrix4x4);
+
+	m_Shader->Set();
+
 	CRenderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);	//	トポロジ設定	※トポロジ = どうやって線を結ぶか。この場合はTRIANGLESTRIP型で結ぶ
 	CRenderer::GetDeviceContext()->Draw(VERTEX_BUEEFER, 0);	//	ポリゴン描画
 

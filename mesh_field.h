@@ -1,9 +1,12 @@
 #ifndef MESH_FIELD_H_
 #define MESH_FIELD_H_
 #define FIELD_SIZE (5)
+
+class CShader;
 class CMesh_Field :public CGameObject
 {
 private:
+	CShader* m_Shader;
 	XMINT3 vertex;
 	float g_FieldHeight[5][5] =
 	{

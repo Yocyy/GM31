@@ -9,28 +9,69 @@ struct CONSTANT
 	XMFLOAT4	CameraPosition;
 };
 
+enum class VS_CSO
+{
+	MIN = -1,
+	Shader_2D,
+	Shader_3D,
+	MAX,
+};
+
+enum class PS_CSO
+{
+	MIN = -1,
+	Shader_2D,
+	Shader_3D,
+	MAX,
+};
+
 class CShader
 {
 private:
+	const char* VSshaderfile[static_cast<unsigned int>(VS_CSO::MAX)] = {
+		"x64/debug/shader2DTestVS.cso",
+		"x64/debug/shader3DTestVS.cso",
+	};
+	const char* PSshaderfile[static_cast<unsigned int>(PS_CSO::MAX)] = {
+		"x64/debug/shader2DTestPS.cso",
+		"x64/debug/shader3DTestPS.cso",
+	};
 	ID3D11VertexShader*     m_VertexShader;
 	ID3D11PixelShader*      m_PixelShader;
 	ID3D11InputLayout*      m_VertexLayout;
 
+	//ID3D11Buffer*			m_WorldBuffer;
+	//ID3D11Buffer*			m_ViewBuffer;
+	//ID3D11Buffer*			m_ProjectionBuffer;
 	ID3D11Buffer*			m_ConstantBuffer;
-	CONSTANT				m_Constant;
-
+	ID3D11Buffer*			m_MaterialBuffer;
 	ID3D11Buffer*			m_LightBuffer;
-	LIGHT m_Light;
+	ID3D11Buffer*			m_VertexBuffer;
+	ID3D11Buffer*			m_IndexBuffer;
+
+	CStbTexture*				m_Texture;
+	CONSTANT				m_Constant;
+	LIGHT					m_Light;
+	MATERIAL				m_Material;
 
 public:
-	void Init( const char* VertexShader, const char* PixelShader );
+
+
+
+	void Init(const VS_CSO VSIndex, const PS_CSO PSIndex);
+
 	void Uninit();
 	void Set();
 
 	void SetWorldMatrix(XMFLOAT4X4* WorldMatrix) { m_Constant.WorldMatrix = Transpose(WorldMatrix); };
 	void SetViewMatrix(XMFLOAT4X4* ViewMatrix) { m_Constant.ViewMatrix = Transpose(ViewMatrix); };
-	void SetProjectionMatrix(XMFLOAT4X4* ProjectionMatrix) { m_Constant.ProjectionMatrix = Transpose( ProjectionMatrix ); }
-	void SetCameraPosition(XMFLOAT4* CameraPosition) { m_Constant.CameraPosition = *CameraPosition; }
+	void SetProjectionMatrix(XMFLOAT4X4* ProjectionMatrix) { m_Constant.ProjectionMatrix = Transpose(ProjectionMatrix); };
+	void SetCameraPosition(XMFLOAT4* CameraPosition) { m_Constant.CameraPosition = *CameraPosition; };
+	void SetMaterial(MATERIAL Material) { m_Material = Material; };
+	void SetLight(LIGHT Light) { m_Light = Light; };
+	void SetVertexBuffers(ID3D11Buffer* VertexBuffer) { m_VertexBuffer = VertexBuffer; };
+	void SetIndexBuffer(ID3D11Buffer* IndexBuffer) { m_IndexBuffer = IndexBuffer; };
+	void SetTexture(CStbTexture* Texture) { m_Texture = Texture; };
 
 	XMFLOAT4X4 Transpose(XMFLOAT4X4* Matrix)
 	{

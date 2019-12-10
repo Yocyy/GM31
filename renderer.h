@@ -1,5 +1,8 @@
-#ifndef RENDERER_H_
-#define RENDERER_H_
+#pragma once
+
+
+
+
 
 // 頂点構造体
 struct VERTEX_3D
@@ -61,23 +64,17 @@ struct DX11_SUBSET
 
 struct LIGHT
 {
-	//XMFLOAT4	Position;
 	XMFLOAT4	Direction;
 	COLOR		Diffuse;
 	COLOR		Ambient;
 };
-//struct ConstantBuffer {
-//	XMFLOAT4X4 world;
-//	XMFLOAT4X4 view;
-//	XMFLOAT4X4 projection;
-//	XMFLOAT4 light;
-//	XMFLOAT4 attenuation;	//減衰パラメータ
-//};
+
 
 
 class CVertexBuffer;
 class CIndexBuffer;
 class CStbTexture;
+
 
 class CRenderer
 {
@@ -93,14 +90,7 @@ private:
 
 
 
-	static ID3D11VertexShader*     m_VertexShader;
-	static ID3D11PixelShader*      m_PixelShader;
-	static ID3D11InputLayout*      m_VertexLayout;
-	static ID3D11Buffer*			m_WorldBuffer;
-	static ID3D11Buffer*			m_ViewBuffer;
-	static ID3D11Buffer*			m_ProjectionBuffer;
-	static ID3D11Buffer*			m_MaterialBuffer;
-	static ID3D11Buffer*			m_LightBuffer;
+
 
 	/*
 		static XMMATRIX				m_WorldMatrix;
@@ -118,21 +108,12 @@ public:
 	static void End();
 
 	static void SetDepthEnable(bool Enable);
-	static void SetWorldViewProjection2D();
-	static void SetWorldMatrix(XMMATRIX * WorldMatrix);
-	static void SetViewMatrix(XMMATRIX * ViewMatrix);
-	static void SetProjectionMatrix(XMMATRIX * ProjectionMatrix);
-	static void SetMaterial(MATERIAL Material);
-	static void SetLight(LIGHT Light);
-	//static void SetLight1(ConstantBuffer cb);
 	static void SetVertexBuffers(ID3D11Buffer* VertexBuffer);
 	static void SetIndexBuffer(ID3D11Buffer* IndexBuffer);
 	static void SetTexture(CStbTexture* Texture);
+	static void SetTexture(CStbTexture* Texture, CStbTexture* SecTexture);
 	static void DrawIndexed(unsigned int IndexCount, unsigned int StartIndexLocation, int BaseVertexLocation);
 
 	static ID3D11Device* GetDevice(void) { return m_D3DDevice; }
 	static ID3D11DeviceContext* GetDeviceContext(void) { return m_ImmediateContext; }
 };
-
-
-#endif // !RENDERER_H_

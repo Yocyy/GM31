@@ -2,10 +2,13 @@
 
 #include "collision.h"
 
+class CShader;
 class CEnemyAI : public CGameObject
 {
 private:
 	constexpr static float m_kHitCircleSize{ 5.0f };
+
+	CShader* m_Shader;
 	CModel* m_Model;
 	XMVECTOR m_Quaternion;
 	bool flag_move;

@@ -55,6 +55,7 @@ void CBulletManager::CreateBullet(XMFLOAT3 Position, XMFLOAT3 vec, BULLET_TYPE t
 	Position.y = ss->_42;
 	Position.z = ss->_43;
 
+
 	assert(type != BULLET_TYPE::MIN || type != BULLET_TYPE::MAX);//error check
 	
 	m_Bullet = scene->AddGameObject<CBullet>(Layer3D_EFFECT);

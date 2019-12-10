@@ -9,11 +9,13 @@
 #include "ShakeCamera.h"
 #include "player.h"
 #include "camera.h"
+#include "Shader.h"
 
 
 static float MoveSpeed;
 void CCamera::Init()
 {
+	m_Shader = new CShader();
 	RECT rect;
 	GetWindowRect(GetWindow(), &rect);
 	float xd = rect.left + SCREEN_WIDTH / 2;
@@ -139,7 +141,8 @@ void CCamera::Draw()
 	CRenderer::GetDeviceContext()->RSSetViewports(1, &dxViewport);
 
 
-
+	XMFLOAT4 CameraPos4f = XMFLOAT4(m_Position.x, m_Position.y, m_Position.x, NULL);
+	m_Shader->SetCameraPosition(&CameraPos4f);
 	// ビューマトリクス設定
 	InvViewMatrix = XMMatrixRotationRollPitchYaw(m_Rotation.x, m_Rotation.y, m_Rotation.z);
 	InvViewMatrix *= XMMatrixTranslation(m_Position.x, m_Position.y, m_Position.z);
@@ -148,12 +151,12 @@ void CCamera::Draw()
 	ViewMatrix = XMMatrixInverse(&det, InvViewMatrix);
 	XMStoreFloat4x4(&m_InvViewMatrix, InvViewMatrix);
 
-	CRenderer::SetViewMatrix(&ViewMatrix);
+	//CRenderer::SetViewMatrix(&ViewMatrix);
 
 	// プロジェクションマトリクス設定
 	ProjectionMatrix = XMMatrixPerspectiveFovLH(1.0f, dxViewport.Width / dxViewport.Height, 1.0f, 1000.0f);
 
-	CRenderer::SetProjectionMatrix(&ProjectionMatrix);
+	//CRenderer::SetProjectionMatrix(&ProjectionMatrix);
 
 	XMStoreFloat4x4(&m_ProjectionMatrix, ProjectionMatrix);
 	XMStoreFloat4x4(&m_ViewMatrix, ViewMatrix);
@@ -183,7 +186,7 @@ bool CCamera::GetVisibility(XMFLOAT3 Position, float Radius)
 {
 	XMVECTOR worldPos, viewPos, projPos;
 	XMFLOAT3 projPosF;
-	XMMATRIX	ViewMatrix, ProjectionMatrix;
+	XMMATRIX ViewMatrix, ProjectionMatrix;
 
 	ViewMatrix = XMLoadFloat4x4(&m_ViewMatrix);
 	ProjectionMatrix = XMLoadFloat4x4(&m_ProjectionMatrix);

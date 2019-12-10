@@ -9,9 +9,11 @@ struct MESH
 	ID3D11Buffer* m_IndexBuffer;
 	unsigned int m_IndexNum;
 };
+class CShader;
 class CModelAnimation
 {
 private:
+	CShader* m_Shader;
 	MESH* m_Mesh;
 	unsigned int m_MeshNum;
 	const aiScene* m_Scene[2];

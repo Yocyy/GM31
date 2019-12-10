@@ -2,9 +2,11 @@
 #include "renderer.h"
 #include "stb-texture.h"
 #include "modelAnimation.h"
+#include "Shader.h"
 
 void CModelAnimation::Draw(XMMATRIX matrix)
 {
+	m_Shader = new CShader();
 	DrawMesh(m_Scene[0]->mRootNode, matrix);
 }
 
@@ -22,7 +24,10 @@ void CModelAnimation::DrawMesh(aiNode * node, XMMATRIX Matrix)
 
 	world *= Matrix;			//親のマトリクスをかけると階層構造
 
-	CRenderer::SetWorldMatrix(&world);
+	//CRenderer::SetWorldMatrix(&world);
+	XMFLOAT4X4 world4x4;
+	XMStoreFloat4x4(&world4x4, world);
+	m_Shader->SetWorldMatrix(&world4x4);
 	for (int n = 0; n < node->mNumMeshes; n++)
 	{
 		unsigned int m = node->mMeshes[n];

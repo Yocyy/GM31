@@ -2,10 +2,12 @@
 #include "renderer.h"
 #include "stb-texture.h"
 #include "model.h"
+#include "Shader.h"
 
 void CModel::Draw()
 {
-	
+
+	m_Shader = new CShader();
 	// 頂点バッファ設定
 	CRenderer::SetVertexBuffers( m_VertexBuffer );
 
@@ -14,8 +16,10 @@ void CModel::Draw()
 
 	for( unsigned short i = 0; i < m_SubsetNum; i++ )
 	{
+
 		// マテリアル設定
-		CRenderer::SetMaterial( m_SubsetArray[i].Material.Material );
+		m_Shader->SetMaterial(m_SubsetArray[i].Material.Material);
+		//CRenderer::SetMaterial( m_SubsetArray[i].Material.Material );
 
 		// テクスチャ設定
 		CRenderer::SetTexture( m_SubsetArray[i].Material.Texture );

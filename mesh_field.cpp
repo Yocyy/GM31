@@ -3,6 +3,10 @@
 #include "renderer.h"
 #include "game_object.h"
 #include "mesh_field.h"
+#include "camera.h"
+#include "manager.h"
+#include "scene.h"
+#include "Shader.h"
 
 static int g_Vertex_max;
 static int g_Index_max;
@@ -120,13 +124,20 @@ void CMesh_Field::Init()
 		m_Texture = new CStbTexture();
 		m_Texture->Load("asset/field004.tga");	// tgaフォーマットのαチャンネル付き圧縮しない。
 
+
+		m_Shader = new CShader();
+		m_Shader->Init(VS_CSO::Shader_3D, PS_CSO::Shader_3D);
 }
 
 void CMesh_Field::Uninit()
 {
 	m_VertexBuffer->Release();
+	m_IndexBuffer->Release();
 	m_Texture->Unload();
 	delete m_Texture;
+
+	m_Shader->Uninit();
+	delete m_Shader;
 }
 
 void CMesh_Field::Update()
@@ -146,7 +157,23 @@ void CMesh_Field::Draw()
 	world = XMMatrixScaling(1.0f, 1.0f, 1.0f);		//拡大縮小
 	world *= XMMatrixRotationRollPitchYaw(0.0f, 0.0f, 0.0f);		//回転
 	world *= XMMatrixTranslation(0.0f, 0.0f, 0.0f);		//移動
-	CRenderer::SetWorldMatrix(&world);
+	
+	XMFLOAT4X4 world4x4;
+	XMStoreFloat4x4(&world4x4, world);
+	m_Shader->SetWorldMatrix(&world4x4);
+	CRenderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	XMFLOAT4X4 viewmatrix4x4;
+	CCamera* camera = CManager::GetScene()->GetGameObject<CCamera>(Layer3D_CAMERA);
+	XMStoreFloat4x4(&viewmatrix4x4, camera->Get_Camera_ViewMatrix());
+	m_Shader->SetViewMatrix(&viewmatrix4x4);
+
+	XMFLOAT4X4 promatrix4x4;
+	XMStoreFloat4x4(&promatrix4x4, camera->Get_Camera_Projection());
+	m_Shader->SetProjectionMatrix(&promatrix4x4);
+
+	m_Shader->Set();
+
 	CRenderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);	//	トポロジ設定	※トポロジ = どうやって線を結ぶか。この場合はTRIANGLESTRIP型で結ぶ
 	CRenderer::GetDeviceContext()->DrawIndexed(g_Index_max, 0,0);	//	ポリゴン描画
 

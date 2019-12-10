@@ -29,10 +29,11 @@ struct MODEL
 };
 
 
-
+class CShader;
 class CModel
 {
 private:
+	CShader* m_Shader;
 	XMMATRIX world;
 	ID3D11Buffer*	m_VertexBuffer = NULL;
 	ID3D11Buffer*	m_IndexBuffer = NULL;
