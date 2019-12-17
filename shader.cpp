@@ -1,21 +1,21 @@
 #include "main.h"
 #include "renderer.h"
-#include "shader.h"
+#include "Shader.h"
 #include <io.h>
 
 
 
 
+void CShader::Init(const VS_CSO VSIndex, const PS_CSO PSIndex) {
 
-void CShader::Init(const char* VertexShader, const char* PixelShader)
-{
-
+	assert(VSIndex != VS_CSO::MIN || VSIndex != VS_CSO::MAX);//error check
+	assert(PSIndex != PS_CSO::MIN || PSIndex != PS_CSO::MAX);//error check
 	// 頂点シェーダ生成
 	{
 		FILE* file;
 		long int fsize;
 
-		file = fopen(VertexShader, "rb");
+		file = fopen(VSshaderfile[static_cast<unsigned int>(VSIndex)], "rb");
 		fsize = _filelength(_fileno(file));
 		unsigned char* buffer = new unsigned char[fsize];
 		fread(buffer, fsize, 1, file);
@@ -52,7 +52,7 @@ void CShader::Init(const char* VertexShader, const char* PixelShader)
 		FILE* file;
 		long int fsize;
 
-		file = fopen(PixelShader, "rb");
+		file = fopen(PSshaderfile[static_cast<unsigned int>(PSIndex)], "rb");
 		fsize = _filelength(_fileno(file));
 		unsigned char* buffer = new unsigned char[fsize];
 		fread(buffer, fsize, 1, file);
@@ -100,11 +100,15 @@ void CShader::Init(const char* VertexShader, const char* PixelShader)
 
 void CShader::Uninit()
 {
-	if (m_ConstantBuffer)	m_ConstantBuffer->Release();
-
 	if (m_VertexLayout)		m_VertexLayout->Release();
 	if (m_VertexShader)		m_VertexShader->Release();
 	if (m_PixelShader)		m_PixelShader->Release();
+
+	if (m_ConstantBuffer)	m_ConstantBuffer->Release();
+	if (m_MaterialBuffer)	m_MaterialBuffer->Release();
+	if (m_LightBuffer)	m_LightBuffer->Release();
+	if (m_VertexBuffer)	m_VertexBuffer->Release();
+	if (m_IndexBuffer)	m_IndexBuffer->Release();
 }
 
 
@@ -123,8 +127,9 @@ void CShader::Set()
 
 
 	// 定数バッファ更新
-	CRenderer::GetDeviceContext()->UpdateSubresource(m_ConstantBuffer, 0, NULL, &m_Constant, 0, 0);
-	CRenderer::GetDeviceContext()->UpdateSubresource(m_LightBuffer, 0, NULL, &m_Light, 0, 0);
+	CRenderer::GetDeviceContext()->UpdateSubresource(m_ConstantBuffer, 0, NULL, &m_Constant, 0, 0);	//コンスタント
+	CRenderer::GetDeviceContext()->UpdateSubresource(m_LightBuffer, 0, NULL, &m_Light, 0, 0);			//ライト
+//	CRenderer::GetDeviceContext()->UpdateSubresource(m_MaterialBuffer, 0, NULL, &m_Material, 0, 0);	//マテリアル
 
 	// 定数バッファ設定
 	CRenderer::GetDeviceContext()->VSSetConstantBuffers(0, 1, &m_ConstantBuffer);

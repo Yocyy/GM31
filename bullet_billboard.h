@@ -6,9 +6,11 @@ typedef struct BILLBOARD_tag {
 }BILLBOARD;
 
 class CStbTexture;
+class CShader;
 class CBullet_Billboard : public CGameObject
 {
 private:
+	CShader* m_Shader;
 	ID3D11Buffer* m_VertexBuffer = NULL;
 	CStbTexture* m_Texture = NULL;
 	XMMATRIX View;

@@ -4,6 +4,7 @@
 class CAudioClip;
 class CModel;
 class CBulletManager;
+class CShader;
 class CPlayer : public CGameObject
 {
 private:
@@ -12,6 +13,7 @@ private:
 	constexpr static float m_kJumpforce{ 0.15f };
 	constexpr static float m_kCircleSize{ 1.0f };
 
+	CShader* m_Shader;
 	CModel* m_Model;
 	CAudioClip* m_AudioClip;
 	bool jump_flag;

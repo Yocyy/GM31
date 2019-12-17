@@ -4,9 +4,11 @@
 #include <d3d11.h>
 
 class CStbTexture;
+class CShader;
 class CPolygon :public CGameObject
 {
 public:
+	CShader* m_Shader;
 	ID3D11Buffer* m_VertexBuffer = NULL;
 	CStbTexture* m_Texture = NULL;
 

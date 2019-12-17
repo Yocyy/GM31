@@ -4,7 +4,6 @@
 #include "cereal/cereal.hpp"
 #include "cereal/archives/json.hpp"
 #include <fstream>
-#define BALL_RADIUS (1)
 
 struct VECTOR3 {
 	float x, y, z;
@@ -20,9 +19,12 @@ struct VECTOR3 {
 	}
 };
 
+class CShader;
 class CBall : public CGameObject
 {
 private:
+	constexpr static float m_kCircleSize{ 1.0f };
+	CShader* m_Shader;
 	CModel* m_Model;
 	XMVECTOR m_Quaternion;
 	bool flag_move;

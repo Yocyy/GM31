@@ -4,7 +4,10 @@
 #include "game_object.h"
 #include "stb-texture.h"
 #include "field.h"
-
+#include "Shader.h"
+#include "camera.h"
+#include "manager.h"
+#include "scene.h"
 
 void CField::Init()
 {
@@ -117,6 +120,8 @@ void CField::Init()
 	m_Rotation = XMFLOAT3( 0.0f, 0.0f, 0.0f );
 	m_Scale = XMFLOAT3( 1.0f, 1.0f, 1.0f );
 
+	m_Shader = new CShader();
+	m_Shader->Init(VS_CSO::Shader_3D, PS_CSO::Shader_3D);
 }
 
 
@@ -129,6 +134,8 @@ void CField::Uninit()
 	m_Texture->Unload();
 	delete m_Texture;
 	
+	m_Shader->Uninit();
+	delete m_Shader;
 }
 
 
@@ -159,7 +166,22 @@ void CField::Draw()
 	world = XMMatrixScaling( m_Scale.x, m_Scale.y, m_Scale.z );
 	world *= XMMatrixRotationRollPitchYaw( m_Rotation.x, m_Rotation.y, m_Rotation.z );
 	world *= XMMatrixTranslation( m_Position.x, m_Position.y, m_Position.z );
-	CRenderer::SetWorldMatrix( &world );
+
+	XMFLOAT4X4 world4x4;
+	XMStoreFloat4x4(&world4x4, world);
+	m_Shader->SetWorldMatrix(&world4x4);
+	CRenderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	XMFLOAT4X4 viewmatrix4x4;
+	CCamera* camera = CManager::GetScene()->GetGameObject<CCamera>(Layer3D_CAMERA);
+	XMStoreFloat4x4(&viewmatrix4x4, camera->Get_Camera_ViewMatrix());
+	m_Shader->SetViewMatrix(&viewmatrix4x4);
+
+	XMFLOAT4X4 promatrix4x4;
+	XMStoreFloat4x4(&promatrix4x4, camera->Get_Camera_Projection());
+	m_Shader->SetProjectionMatrix(&promatrix4x4);
+
+	m_Shader->Set();
 
 	// プリミティブトポロジ設定
 	CRenderer::GetDeviceContext()->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP );

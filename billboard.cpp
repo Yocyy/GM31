@@ -7,6 +7,7 @@
 #include "camera.h"
 #include "billboard.h"
 #include "stb-texture.h"
+#include "Shader.h"
 
 //-------------------------------------------------------------------//
 //							構造体定義								 //
@@ -47,7 +48,8 @@ void CBillboard::Init()
 	ZeroMemory(&sd, sizeof(sd));
 	sd.pSysMem = vertex;	// 最初の頂点を格納
 	CRenderer::GetDevice()->CreateBuffer(&bd, &sd, &m_VertexBuffer);
-
+	m_Shader = new CShader();
+	m_Shader->Init(VS_CSO::Shader_3D, PS_CSO::Shader_3D);
 }
 
 void CBillboard::Update()
@@ -91,9 +93,22 @@ void CBillboard::Draw()
 	UINT offset = 0;
 	CRenderer::GetDeviceContext()->IASetVertexBuffers(0, 1, &m_VertexBuffer, &stride, &offset);	//	頂点バッファを設定 9だとSetVertexBuffer
 	CRenderer::SetTexture(m_Texture);	// テクスチャ設定
-	//XMMATRIX world;
-	//world *= XMMatrixTranslation(g_Billboard.Position.x, g_Billboard.Position.y, g_Billboard.Position.z);		//移動
-	CRenderer::SetWorldMatrix(&world);
+
+	XMFLOAT4X4 world4x4;
+	XMStoreFloat4x4(&world4x4, world);
+	m_Shader->SetWorldMatrix(&world4x4);
+
+	XMFLOAT4X4 viewmatrix4x4;
+	CCamera* camera = CManager::GetScene()->GetGameObject<CCamera>(Layer3D_CAMERA);
+	XMStoreFloat4x4(&viewmatrix4x4, camera->Get_Camera_ViewMatrix());
+	m_Shader->SetViewMatrix(&viewmatrix4x4);
+
+	XMFLOAT4X4 promatrix4x4;
+	XMStoreFloat4x4(&promatrix4x4, camera->Get_Camera_Projection());
+	m_Shader->SetProjectionMatrix(&promatrix4x4);
+
+	m_Shader->Set();
+
 	CRenderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);	//	トポロジ設定	※トポロジ = どうやって線を結ぶか。この場合はTRIANGLESTRIP型で結ぶ
 	CRenderer::GetDeviceContext()->Draw(4, 0);	//	ポリゴン描画
 }

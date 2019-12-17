@@ -4,6 +4,10 @@
 #include "input.h"
 #include "game_object.h"
 #include "polygon.h"
+#include "Shader.h"
+#include "camera.h"
+#include "manager.h"
+#include "camera.h"
 
 static int a = 0;
 // XMとは
@@ -44,6 +48,9 @@ void CPolygon::Init()
 	CRenderer::GetDevice()->CreateBuffer(&bd, &sd, &m_VertexBuffer);
 	//m_Texture = texture;
 	//m_Texture->Load("asset/Test.tga");	// tgaフォーマットのαチャンネル付き圧縮しない。
+
+	m_Shader = new CShader();
+	m_Shader->Init(VS_CSO::Shader_2D, PS_CSO::Shader_2D);
 }
 
 
@@ -51,6 +58,9 @@ void CPolygon::Init()
 void CPolygon::Uninit()
 {
 	m_VertexBuffer->Release();
+
+	m_Shader->Uninit();
+	delete m_Shader;
 	//m_Texture->Unload();
 	//delete m_Texture;
 }
@@ -78,13 +88,37 @@ void CPolygon::Update()
 
 void CPolygon::Draw()
 {
+	//UINT stride = sizeof(VERTEX_3D);
+	//UINT offset = 0;
+	//CRenderer::GetDeviceContext()->IASetVertexBuffers(0, 1, &m_VertexBuffer, &stride, &offset);	//	頂点バッファを設定 9だとSetVertexBuffer
+	//CRenderer::SetTexture(m_Texture);	// テクスチャ設定
+	//CRenderer::SetWorldViewProjection2D();	// 2Dマトリクス設定
+	//CRenderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);	//	トポロジ設定	※トポロジ = どうやって線を結ぶか。この場合はTRIANGLESTRIP型で結ぶ
+	//CRenderer::GetDeviceContext()->Draw(4, 0);	//	ポリゴン描画
+
+		// 頂点バッファ設定
 	UINT stride = sizeof(VERTEX_3D);
 	UINT offset = 0;
-	CRenderer::GetDeviceContext()->IASetVertexBuffers(0, 1, &m_VertexBuffer, &stride, &offset);	//	頂点バッファを設定 9だとSetVertexBuffer
-	CRenderer::SetTexture(m_Texture);	// テクスチャ設定
-	CRenderer::SetWorldViewProjection2D();	// 2Dマトリクス設定
-	CRenderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);	//	トポロジ設定	※トポロジ = どうやって線を結ぶか。この場合はTRIANGLESTRIP型で結ぶ
-	CRenderer::GetDeviceContext()->Draw(4, 0);	//	ポリゴン描画
+	CRenderer::GetDeviceContext()->IASetVertexBuffers(0, 1, &m_VertexBuffer, &stride, &offset);
+
+	CRenderer::SetTexture(m_Texture);
+
+	XMFLOAT4X4 identity;
+	DirectX::XMStoreFloat4x4(&identity, XMMatrixIdentity());
+
+	XMFLOAT4X4 projection;
+	DirectX::XMStoreFloat4x4(&projection, XMMatrixOrthographicOffCenterLH(0.0f, SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, 0.0f, 1.0f));
+
+	m_Shader->SetProjectionMatrix(&projection);
+
+	m_Shader->Set();
+
+
+	// プリミティブトポロジ設定
+	CRenderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+	// ポリゴン描画
+	CRenderer::GetDeviceContext()->Draw(4, 0);
 }
 
 void CPolygon::SetTexture(CStbTexture* texture)

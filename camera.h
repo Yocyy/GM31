@@ -2,11 +2,12 @@
 #define CAMERA_H_
 
 class CPlayer;
-
+class CShader;
 class CCamera : public CGameObject
 {
 private:
 
+	CShader* m_Shader;
 	//XMMATRIX m_ViewMatrix;
 	RECT m_Viewport;
 	CPlayer* m_Player;

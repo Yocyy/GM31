@@ -10,6 +10,8 @@
 #include "manager.h"
 #include "player.h"
 #include "BulletManager.h"
+#include "Shader.h"
+#include "camera.h"
 
 static float MoveSpeed = 0.1f;
 static float RotationSpeed = 0.1f;
@@ -30,6 +32,9 @@ void CPlayer::Init()
 	m_Model->Load("asset/miku_01.obj");
 	m_AudioClip->Load("asset/sound/SE/shotsound_001.wav");
 
+	m_Shader = new CShader();
+	m_Shader->Init(VS_CSO::Shader_3D, PS_CSO::Shader_3D);
+
 }
 
 void CPlayer::Draw()
@@ -39,7 +44,22 @@ void CPlayer::Draw()
 	world = XMMatrixScaling(m_Scale.x, m_Scale.y, m_Scale.z);
 	world *= XMMatrixRotationRollPitchYaw(m_Rotation.x, m_Rotation.y, m_Rotation.z);
 	world *= XMMatrixTranslation(m_Position.x, m_Position.y, m_Position.z);
-	CRenderer::SetWorldMatrix(&world);
+	
+	XMFLOAT4X4 world4x4;
+	XMStoreFloat4x4(&world4x4, world);
+	m_Shader->SetWorldMatrix(&world4x4);
+	CRenderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	XMFLOAT4X4 viewmatrix4x4;
+	CCamera* camera = CManager::GetScene()->GetGameObject<CCamera>(Layer3D_CAMERA);
+	XMStoreFloat4x4(&viewmatrix4x4, camera->Get_Camera_ViewMatrix());
+	m_Shader->SetViewMatrix(&viewmatrix4x4);
+
+	XMFLOAT4X4 promatrix4x4;
+	XMStoreFloat4x4(&promatrix4x4, camera->Get_Camera_Projection());
+	m_Shader->SetProjectionMatrix(&promatrix4x4);
+
+	m_Shader->Set();
 	CRenderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	m_Model->Draw();
 }
@@ -113,5 +133,8 @@ XMFLOAT3 CPlayer::Get_Player_Front()
 }
 void CPlayer::Uninit()
 {
+
+	m_Shader->Uninit();
+	delete m_Shader;
 	m_Model->Unload();
 }
