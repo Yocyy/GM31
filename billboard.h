@@ -1,10 +1,6 @@
 #ifndef _BILLBOARD_H_
 #define _BILLBOARD_H_
 
-typedef struct BILLBOARD_tag {
-	XMFLOAT3 Position;
-	int Animation_Count;
-}BILLBOARD;
 
 class CStbTexture;
 class CShader;

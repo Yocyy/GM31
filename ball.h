@@ -20,6 +20,7 @@ struct VECTOR3 {
 };
 
 class CShader;
+class CModel;
 class CBall : public CGameObject
 {
 private:
@@ -37,5 +38,6 @@ public:
 	void Uninit();
 	void Update();
 	void Draw();
+	XMFLOAT3 GetPos() { return m_Position; };
 	CIRCLE* circle;
 };

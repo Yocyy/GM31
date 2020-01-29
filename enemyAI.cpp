@@ -59,6 +59,8 @@ void CEnemyAI::Draw()
 	XMStoreFloat4x4(&promatrix4x4, camera->Get_Camera_Projection());
 	m_Shader->SetProjectionMatrix(&promatrix4x4);
 
+	m_Shader->SetCameraPosition(&camera->Get_Camera_Position4f());
+
 	m_Shader->Set();
 	CRenderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	m_Model->Draw();
@@ -87,7 +89,7 @@ void CEnemyAI::Update()
 		m_Position.z += vec.z * MoveSpeed;
 	}
 
-	CField* m_Field = CManager::GetScene()->GetGameObject<CField>(2);
+	CField* m_Field = CManager::GetScene()->GetGameObject<CField>(Layer3D_MODEL);
 	m_Position.y = m_Field->GetHeight(m_Position) + 0.5f;
 	circle->Pos = m_Position;
 }

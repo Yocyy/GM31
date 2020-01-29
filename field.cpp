@@ -112,7 +112,7 @@ void CField::Init()
 
 
 	m_Texture = new CStbTexture();
-	m_Texture->Load("asset/field004.tga");
+	m_Texture->Load("asset/TEXTURE/wall_11.jpg");
 		
 
 
@@ -180,6 +180,8 @@ void CField::Draw()
 	XMFLOAT4X4 promatrix4x4;
 	XMStoreFloat4x4(&promatrix4x4, camera->Get_Camera_Projection());
 	m_Shader->SetProjectionMatrix(&promatrix4x4);
+
+	m_Shader->SetCameraPosition(&camera->Get_Camera_Position4f());
 
 	m_Shader->Set();
 

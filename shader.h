@@ -14,6 +14,7 @@ enum class VS_CSO
 	MIN = -1,
 	Shader_2D,
 	Shader_3D,
+	NormalMapping,
 	MAX,
 };
 
@@ -22,6 +23,7 @@ enum class PS_CSO
 	MIN = -1,
 	Shader_2D,
 	Shader_3D,
+	NormalMapping,
 	MAX,
 };
 
@@ -30,12 +32,15 @@ class CShader
 private:
 	const char* VSshaderfile[static_cast<unsigned int>(VS_CSO::MAX)] = {
 		"x64/debug/shader2DTestVS.cso",
-		"x64/debug/shader3DTestVS.cso",
+		"x64/debug/Shader3D_VS.cso",
+		"x64/debug/Shader3DNormalMappingVS.cso"
 	};
 	const char* PSshaderfile[static_cast<unsigned int>(PS_CSO::MAX)] = {
 		"x64/debug/shader2DTestPS.cso",
-		"x64/debug/shader3DTestPS.cso",
+		"x64/debug/Shader3D_PS.cso",
+		"x64/debug/Shader3DNormalMappingPS.cso"
 	};
+
 	ID3D11VertexShader*     m_VertexShader;
 	ID3D11PixelShader*      m_PixelShader;
 	ID3D11InputLayout*      m_VertexLayout;
@@ -67,8 +72,9 @@ public:
 	void SetViewMatrix(XMFLOAT4X4* ViewMatrix) { m_Constant.ViewMatrix = Transpose(ViewMatrix); };
 	void SetProjectionMatrix(XMFLOAT4X4* ProjectionMatrix) { m_Constant.ProjectionMatrix = Transpose(ProjectionMatrix); };
 	void SetCameraPosition(XMFLOAT4* CameraPosition) { m_Constant.CameraPosition = *CameraPosition; };
+	void SetLight(LIGHT light) { m_Light = light; };
 	void SetMaterial(MATERIAL Material) { m_Material = Material; };
-	void SetLight(LIGHT Light) { m_Light = Light; };
+
 	void SetVertexBuffers(ID3D11Buffer* VertexBuffer) { m_VertexBuffer = VertexBuffer; };
 	void SetIndexBuffer(ID3D11Buffer* IndexBuffer) { m_IndexBuffer = IndexBuffer; };
 	void SetTexture(CStbTexture* Texture) { m_Texture = Texture; };
