@@ -287,7 +287,8 @@ namespace cereal
         virtual ~InputArchiveBase() CEREAL_NOEXCEPT = default;
 
       private:
-        virtual void rtti() {}
+
+		  virtual void rtti() {}
     };
 
     // forward decls for polymorphic support

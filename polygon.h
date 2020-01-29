@@ -11,7 +11,7 @@ public:
 	CShader* m_Shader;
 	ID3D11Buffer* m_VertexBuffer = NULL;
 	CStbTexture* m_Texture = NULL;
-
+	float m_Width, m_Height;
 public:
 	void Init();
 	void Uninit();

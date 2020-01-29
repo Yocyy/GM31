@@ -15,6 +15,7 @@
 #include "ball.h"
 #include "camera.h"
 #include "manager.h"
+#include "LightManager.h"
 
 void CBall::Init()
 {
@@ -51,6 +52,7 @@ void CBall::Init()
 
 void CBall::Draw()
 {
+	CManager::GetScene()->GetGameObject<CLightManager>(Layer3D_LIGHT)->SetType(1);
 	CCamera* camera;
 	camera = CManager::GetScene()->GetGameObject<CCamera>(Layer3D_CAMERA);
 	if (camera->GetVisibility(m_Position, m_kCircleSize) == false)
@@ -76,6 +78,8 @@ void CBall::Draw()
 	XMFLOAT4X4 promatrix4x4;
 	XMStoreFloat4x4(&promatrix4x4, camera->Get_Camera_Projection());
 	m_Shader->SetProjectionMatrix(&promatrix4x4);
+
+	m_Shader->SetCameraPosition(&camera->Get_Camera_Position4f());
 
 	m_Shader->Set();
 	m_Model->Draw();
@@ -139,7 +143,7 @@ void CBall::Update()
 		m_Position.x -= MoveSpeed;
 	}
 
-	CField* m_Field = CManager::GetScene()->GetGameObject<CField>(2);
+	CField* m_Field = CManager::GetScene()->GetGameObject<CField>(Layer3D_MODEL);
 	m_Position.y = m_Field->GetHeight(m_Position) + 0.5f;
 	circle->Pos = m_Position;
 }

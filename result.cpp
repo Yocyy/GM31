@@ -9,6 +9,7 @@
 #include "manager.h"
 #include "camera.h"
 #include "polygon.h"
+#include "stb-texture.h"
 
 void CResult::Init()
 {
@@ -18,6 +19,10 @@ void CResult::Init()
 	bgm = new CAudioClip();
 	bgm->Load("asset/sound/BGM/a.wav");
 	bgm->Play(true);
+
+	m_Texture = new CStbTexture();
+	m_Texture->Load("asset/TEXTURE/result.png");	// tgaフォーマットのαチャンネル付き圧縮しない。
+	AddGameObject<CPolygon>(Layer2D_UI)->SetTexture(m_Texture);
 }
 
 void CResult::Uninit()
@@ -26,6 +31,9 @@ void CResult::Uninit()
 	bgm->Stop();
 	bgm->Unload();
 	delete bgm;
+
+	m_Texture->Unload();
+	delete m_Texture;
 	CScene::Uninit();
 }
 

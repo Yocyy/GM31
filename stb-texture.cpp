@@ -7,7 +7,6 @@ void CStbTexture::Load(const char *FileName)
 	int bpp = NULL;
 	int width = NULL;
 	int height = NULL;
-	float size = NULL;
 
 	pixels = stbi_load(FileName, &width, &height, &bpp, 4);
 
@@ -50,7 +49,6 @@ void CStbTexture::Load(const char *FileName)
 
 	// ƒƒ‚ƒŠã‚Ì‰æ‘œƒf[ƒ^‚ğ”jŠü
 	stbi_image_free(pixels);
-	//delete image;
 }
 
 

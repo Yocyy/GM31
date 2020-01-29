@@ -19,22 +19,41 @@
 #include "judgement.h"
 #include "BulletManager.h"
 #include "enemyAI.h"
+#include "DirectionalLight.h"
+#include "LightManager.h"
+#include "m4a1.h"
+#include "fieldNormal.h"
+#include "skydome.h"
+#include "polygon2D.h"
+#include "WeaponState.h"
 
 static bool flag_result;
+
 void CGame::Init()
 {
 	ShowCursor(false);
+	AddGameObject<CLightManager>(Layer3D_LIGHT);
 	AddGameObject<CBulletManager>(Layer3D_Manager);
 	AddGameObject<CCamera>(Layer3D_CAMERA);
 	AddGameObject<CJudgement>(Layer3D_CAMERA);
+	AddGameObject<CBall>(Layer3D_MODEL);
 	AddGameObject<CField>(Layer3D_MODEL);
 	AddGameObject<CWall>(Layer3D_MODEL);
+
+	AddGameObject<KNIFE>(Layer3D_MODEL);
+	AddGameObject<AK>(Layer3D_MODEL);
+	AddGameObject<M4A1>(Layer3D_MODEL);
+
 	AddGameObject<CPlayer>(Layer3D_MODEL);
 	AddGameObject<CEnemy>(Layer3D_MODEL);
 	AddGameObject<CEnemy>(Layer3D_MODEL);
 	AddGameObject<CEnemy>(Layer3D_MODEL);
-	AddGameObject<CBall>(Layer3D_MODEL);
 	AddGameObject<CEnemyAI>(Layer3D_MODEL);
+
+	//AddGameObject<CM4A1>(Layer3D_MODEL);
+	//AddGameObject<CFieldNormal>(Layer3D_MODEL);
+	//AddGameObject<CSkydome>(Layer3D_MODEL);
+	AddGameObject<CPolygon2D>(Layer2D_UI);
 
 	bgm = new CAudioClip();
 	bgm->Load("asset/sound/BGM/a.wav");

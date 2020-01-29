@@ -5,6 +5,7 @@ class CAudioClip;
 class CModel;
 class CBulletManager;
 class CShader;
+class Weapons;
 class CPlayer : public CGameObject
 {
 private:
@@ -15,19 +16,39 @@ private:
 
 	CShader* m_Shader;
 	CModel* m_Model;
+	CScene* m_Scene;
 	CAudioClip* m_AudioClip;
-	bool jump_flag;
+	bool jump_flag,scope_flag;
 	XMFLOAT3 velocity;	//‰Á‘¬“x
+
+	Weapons* currentWeapon;
+	Weapons* nextWeapon;
+	Weapons* prevWeapon;
+	bool InitFlag = false;
+
+	XMFLOAT3 m_Front = XMFLOAT3(0.0f, 0.0f, 1.0f);
+	XMFLOAT3 m_Right = XMFLOAT3(1.0f, 0.0f, 0.0f);
+	XMFLOAT3 m_Up = XMFLOAT3(0.0f, 1.0f, 0.0f);
 public:
-	XMFLOAT3 g_front = XMFLOAT3(0.0f, 0.0f, 1.0f);
-	XMFLOAT3 g_right = XMFLOAT3(1.0f, 0.0f, 0.0f);
-	XMFLOAT3 g_up = XMFLOAT3(0.0f, 1.0f, 0.0f);
 	void Init();
 	void Uninit();
 	void Update();
 	void Draw();
+	void Fire();
+	void NextWeaponChange();
+	void PrevWeaponChange();
+	void Reload();
+	void Jump();
 	XMFLOAT3 Get_Player_Position();
 	XMFLOAT3 Get_Player_Rotation();
-	XMFLOAT3 Get_Player_Front();
+
+	XMFLOAT3 Get_Player_Front() { return m_Front; };
+	XMFLOAT3 Get_Player_Right() { return m_Right; };
+	XMFLOAT3 Get_Player_Up() { return m_Up; };
+
+	void Set_Player_Front(XMFLOAT3 front) { m_Front = front; };
+	void Set_Player_Right(XMFLOAT3 right) { m_Right = right; };
+	void Set_Player_Up(XMFLOAT3 up) { m_Up = up; };
+
 	CIRCLE* circle;
 };

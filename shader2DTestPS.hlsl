@@ -16,6 +16,7 @@ void main(in PS_IN input, out float4 outDiffuse : SV_Target)
     
    //マルチテクスチャ設定
     outDiffuse = g_Texture.Sample(g_SamplerState, input.inTexCoord);
+    
     //グレースケール(平均)
     //outDiffuse.rgb = (outDiffuse.r + outDiffuse.g + outDiffuse.b) * 0.3333f;
 

@@ -20,7 +20,7 @@ void CWall::Init()
 	vertex[0].Position = XMFLOAT3(-100.0f, 0.0f, 0.0f);		// 座標
 	vertex[0].Normal = XMFLOAT3(0.0f, 1.0f, 0.0f);			// 法線
 	vertex[0].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);	// 色
-	vertex[0].TexCoord = XMFLOAT2(0.0f, 5.0f);				//uv
+	vertex[0].TexCoord = XMFLOAT2(0.0f, 1.0f);				//uv
 
 	vertex[1].Position = XMFLOAT3(-100.0f, 50.0f, 0.0f);		// 座標
 	vertex[1].Normal = XMFLOAT3(0.0f, 1.0f, 0.0f);			// 法線
@@ -30,27 +30,27 @@ void CWall::Init()
 	vertex[2].Position = XMFLOAT3(-100.0f, 0.0f, 200.0f);		// 座標
 	vertex[2].Normal = XMFLOAT3(0.0f, 1.0f, 0.0f);			// 法線
 	vertex[2].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);	// 色
-	vertex[2].TexCoord = XMFLOAT2(5.0f, 5.0f);				//uv
+	vertex[2].TexCoord = XMFLOAT2(1.0f, 1.0f);				//uv
 
 	vertex[3].Position = XMFLOAT3(-100.0f, 50.0f, 200.0f);		// 座標
 	vertex[3].Normal = XMFLOAT3(0.0f, 1.0f, 0.0f);			// 法線
 	vertex[3].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);	// 色
-	vertex[3].TexCoord = XMFLOAT2(5.0f, 0.0f);				//uv
+	vertex[3].TexCoord = XMFLOAT2(1.0f, 0.0f);				//uv
 
 	vertex[4].Position = XMFLOAT3(100.0f, 0.0f, 200.0f);		// 座標
 	vertex[4].Normal = XMFLOAT3(0.0f, 1.0f, 0.0f);			// 法線
 	vertex[4].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);	// 色
-	vertex[4].TexCoord = XMFLOAT2(10.0f, 5.0f);				//uv
+	vertex[4].TexCoord = XMFLOAT2(2.0f, 1.0f);				//uv
 
 	vertex[5].Position = XMFLOAT3(100.0f, 50.0f, 200.0f);		// 座標
 	vertex[5].Normal = XMFLOAT3(0.0f, 1.0f, 0.0f);			// 法線
 	vertex[5].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);	// 色
-	vertex[5].TexCoord = XMFLOAT2(10.0f, 0);				//uv
+	vertex[5].TexCoord = XMFLOAT2(2.0f, 0);				//uv
 	//右面壁
 	vertex[6].Position = XMFLOAT3(100.0f, 0.0f, 0.0f);		// 座標
 	vertex[6].Normal = XMFLOAT3(0.0f, 1.0f, 0.0f);			// 法線
 	vertex[6].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);	// 色
-	vertex[6].TexCoord = XMFLOAT2(15.0f, 5.0f);				//uv
+	vertex[6].TexCoord = XMFLOAT2(3.0f, 1.0f);				//uv
 
 	vertex[7].Position = XMFLOAT3(100.0f, 50.0f, 0.0f);		// 座標
 	vertex[7].Normal = XMFLOAT3(0.0f, 1.0f, 0.0f);			// 法線
@@ -69,7 +69,7 @@ void CWall::Init()
 	sd.pSysMem = vertex;	// 最初の頂点を格納
 	CRenderer::GetDevice()->CreateBuffer(&bd, &sd, &m_VertexBuffer);
 	m_Texture = new CStbTexture();
-	m_Texture->Load("asset/Wall_01.tga");	// tgaフォーマットのαチャンネル付き圧縮しない。
+	m_Texture->Load("asset/TEXTURE/tree_001.jpg");	// tgaフォーマットのαチャンネル付き圧縮しない。
 
 	m_Shader = new CShader();
 	m_Shader->Init(VS_CSO::Shader_3D, PS_CSO::Shader_3D);
@@ -114,6 +114,8 @@ void CWall::Draw()
 	XMFLOAT4X4 promatrix4x4;
 	XMStoreFloat4x4(&promatrix4x4, camera->Get_Camera_Projection());
 	m_Shader->SetProjectionMatrix(&promatrix4x4);
+
+	m_Shader->SetCameraPosition(&camera->Get_Camera_Position4f());
 
 	m_Shader->Set();
 
