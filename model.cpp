@@ -436,10 +436,10 @@ void CModel::LoadMaterial( const char *FileName, MODEL_MATERIAL **MaterialArray,
 		else if( strcmp( str, "Ks" ) == 0 )
 		{
 			//ƒXƒyƒLƒ…ƒ‰
-			fscanf( file, "%f", &materialArray[ mc ].Material.Specular.r );
-			fscanf( file, "%f", &materialArray[ mc ].Material.Specular.g );
-			fscanf( file, "%f", &materialArray[ mc ].Material.Specular.b );
-			materialArray[ mc ].Material.Specular.a = 1.0f;
+			fscanf( file, "%f", &materialArray[ mc ].Material.SpecularColor.r );
+			fscanf( file, "%f", &materialArray[ mc ].Material.SpecularColor.g );
+			fscanf( file, "%f", &materialArray[ mc ].Material.SpecularColor.b );
+			materialArray[ mc ].Material.SpecularColor.a = 1.0f;
 		}
 		else if( strcmp( str, "Ns" ) == 0 )
 		{

@@ -12,8 +12,8 @@
 void CBulletManager::Init()
 {
 	const char* TexFiles[g_kBulletTexNum] = {
-		"asset/bullet.tga",
-		"asset/bullet.tga",
+		"asset/TEXTURE/bullet.tga",
+		"asset/TEXTURE/bullet1.tga",
 	};
 
 	for (int i = 0; i < g_kBulletTexNum; i++)

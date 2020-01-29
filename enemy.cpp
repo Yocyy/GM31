@@ -49,6 +49,8 @@ void CEnemy::Draw()
 	XMStoreFloat4x4(&promatrix4x4, camera->Get_Camera_Projection());
 	m_Shader->SetProjectionMatrix(&promatrix4x4);
 
+	m_Shader->SetCameraPosition(&camera->Get_Camera_Position4f());
+
 	m_Shader->Set();
 	m_Model->Draw(world);
 }

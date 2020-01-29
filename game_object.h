@@ -21,6 +21,10 @@ public:
 	{
 		m_Destroy = true;
 	}
+	virtual bool GetDestroy()
+	{
+		return m_Destroy;
+	}
 	virtual bool Destroy()
 	{
 		if (m_Destroy)

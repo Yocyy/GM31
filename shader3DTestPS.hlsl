@@ -39,6 +39,15 @@ float4 main(in PS_IN input) : SV_Target
 {
     float4 outDiffuse;
     outDiffuse = g_Texture.Sample(g_SamplerState, input.inTexCoord); //画像のリソースから画像を表示
+    
+        
+    if (outDiffuse.a <= 0.0f)
+    {
+        discard;
+    }
+    
+    outDiffuse *= Light.Ambient * 1.0;  //アンビエントライト、色×色の強さ(0.0～1.0)
+    
     //ピクセルライティング
     input.inNormal = normalize(input.inNormal);
     float light = 0.5 - dot(input.inNormal.xyz, Light.Direction.xyz) * 0.5; //真上から光がきたと仮定する(長さは１)
@@ -46,6 +55,8 @@ float4 main(in PS_IN input) : SV_Target
     outDiffuse *= light;
     outDiffuse.a = 1.0;
     
+    outDiffuse += Light.Diffuse * 1.0;  //ライトディフューズ、色×色の強さ(0.0～1.0)
+
     //スペキュラー設定
     float3 refv = reflect(Light.Direction.xyz, input.inNormal.xyz); //反射ベクトルを求める    １、反射させる光　２、反射する法線
     refv = normalize(refv); //正規化
@@ -54,7 +65,7 @@ float4 main(in PS_IN input) : SV_Target
     
     float specular = -dot(eyev, refv);
     specular = saturate(specular);
-    specular = pow(specular, 10); //10乗   大きくすると強くなり、小さくすると弱くなる
+    specular = pow(specular, 20); //10乗   大きくすると強くなり、小さくすると弱くなる
     outDiffuse += specular;
     
     return outDiffuse;

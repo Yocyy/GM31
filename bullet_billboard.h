@@ -1,9 +1,6 @@
 #pragma once
-
-typedef struct BILLBOARD_tag {
-	XMFLOAT3 Position;
-	int Animation_Count;
-}BILLBOARD;
+#include <stdio.h>
+#include <math.h>
 
 class CStbTexture;
 class CShader;
@@ -18,13 +15,23 @@ private:
 	VERTEX_3D vertex[4];
 	float x = 10.0f;
 	float y = 10.0f;
-	float MoveSpeed = 0.0f;
+	XMFLOAT3 m_Vec;
+	float m_VecLen;
+
 	int Count;
 	XMFLOAT3 m_Front;
+
+	MATERIAL m_Material;
+	COLOR		m_Ambient;
+	COLOR		m_Diffuse;
+	COLOR		m_SpecularColor;
+	COLOR		m_Emission;
+	float		m_Shininess;
 public:
-	void Bill_Create(XMFLOAT3 Position, XMFLOAT3 Front, float Speed, CStbTexture* StbTexture);
+	void Bill_Create(XMFLOAT3 Position,CStbTexture* StbTexture);
 	void Init();
 	void Uninit();
 	void Update();
 	void Draw();
+	float GetSortLenght() { return m_VecLen; };
 };

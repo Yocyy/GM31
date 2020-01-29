@@ -10,9 +10,11 @@ enum Layer
 {
 	Layer_min = -1,
 	Layer3D_Manager,
+	Layer3D_LIGHT,
 	Layer3D_CAMERA,
 	Layer3D_MODEL,
 	Layer3D_EFFECT,
+	Layer3D_BULLET,
 	Layer2D_UI,
 	Layer_max,
 };
@@ -49,6 +51,14 @@ public:
 		return object;
 	}
 
+	//template <typename T>
+	//T* AddGameObject(int Layer,CScene* scene)
+	//{
+	//	T* object = new T();
+	//	object->Init(CScene* scene);
+	//	m_GameObject[Layer].push_back(object);
+	//	return object;
+	//}
 
 	template <typename T>
 	std::vector<T*> GetGameObjects(int Layer)
@@ -107,6 +117,11 @@ public:
 	virtual void DestroyGameObject(CGameObject* GameObject)
 	{
 		GameObject->SetDestroy();
+	}
+
+	void SetSortList(std::list<CGameObject*> list)
+	{
+		m_GameObject[Layer3D_BULLET] = list;
 	}
 };
 

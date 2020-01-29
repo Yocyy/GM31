@@ -18,7 +18,6 @@ void CInput::Init()
 void CInput::Uninit()
 {
 
-
 }
 
 void CInput::Update()
@@ -27,6 +26,7 @@ void CInput::Update()
 	memcpy( m_OldKeyState, m_KeyState, 256 );
 
 	GetKeyboardState( m_KeyState );
+
 
 }
 

@@ -15,6 +15,7 @@
 #include "enemy.h"
 #include "bullet.h"
 #include "result.h"
+#include "game.h"
 
 
 CScene* CManager::scene = nullptr;
@@ -24,7 +25,7 @@ void CManager::Init()
 	CAudioClip::Init();
 	CInput::Init();
 
-	SetScene<CTitle>();
+	SetScene<CGame>();
 }
 
 void CManager::Uninit()

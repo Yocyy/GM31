@@ -87,12 +87,15 @@ void CShader::Init(const VS_CSO VSIndex, const PS_CSO PSIndex) {
 		hBufferDesc.MiscFlags = 0;
 		hBufferDesc.StructureByteStride = sizeof(float);
 
-		hBufferDesc.ByteWidth = sizeof(LIGHT);
-		CRenderer::GetDevice()->CreateBuffer(&hBufferDesc, NULL, &m_LightBuffer);
+		hBufferDesc.ByteWidth = sizeof(MATERIAL);
+		CRenderer::GetDevice()->CreateBuffer(&hBufferDesc, NULL, &m_MaterialBuffer);
 	}
-	m_Light.Direction = XMFLOAT4(0.0f, -1.0f, 0.0f, 0.0f);	//ライトベクトル
-	m_Light.Diffuse = COLOR(0.0f, 0.0f, 0.0f, 0.0f);	//ライトカラー
-	m_Light.Ambient = COLOR(0.0f, 0.0f, 0.0f, 0.0f);	//環境光
+
+	m_Material.Ambient = COLOR(0, 0, 0, 0);
+	m_Material.Diffuse = COLOR(1, 1, 1, 0);
+	m_Material.Emission = COLOR(1, 1, 1, 1);
+	m_Material.SpecularColor = COLOR(1, 1, 1, 1);
+	m_Material.Shininess = 20;
 }
 
 
@@ -128,13 +131,11 @@ void CShader::Set()
 
 	// 定数バッファ更新
 	CRenderer::GetDeviceContext()->UpdateSubresource(m_ConstantBuffer, 0, NULL, &m_Constant, 0, 0);	//コンスタント
-	CRenderer::GetDeviceContext()->UpdateSubresource(m_LightBuffer, 0, NULL, &m_Light, 0, 0);			//ライト
-//	CRenderer::GetDeviceContext()->UpdateSubresource(m_MaterialBuffer, 0, NULL, &m_Material, 0, 0);	//マテリアル
+	CRenderer::GetDeviceContext()->UpdateSubresource(m_MaterialBuffer, 0, NULL, &m_Material, 0, 0);	//マテリアル
 
 	// 定数バッファ設定
 	CRenderer::GetDeviceContext()->VSSetConstantBuffers(0, 1, &m_ConstantBuffer);
-	CRenderer::GetDeviceContext()->VSSetConstantBuffers(1, 1, &m_LightBuffer);
 
 	CRenderer::GetDeviceContext()->PSSetConstantBuffers(0, 1, &m_ConstantBuffer);
-	CRenderer::GetDeviceContext()->PSSetConstantBuffers(1, 1, &m_LightBuffer);
+	CRenderer::GetDeviceContext()->PSSetConstantBuffers(1, 1, &m_MaterialBuffer);
 }

@@ -1,9 +1,5 @@
 #pragma once
 
-
-
-
-
 // 頂点構造体
 struct VERTEX_3D
 {
@@ -13,6 +9,16 @@ struct VERTEX_3D
 	XMFLOAT2 TexCoord;
 };
 
+// 法線マッピング構造体
+struct VERTEX_3D_NORMAL
+{
+	XMFLOAT3 Position;
+	XMFLOAT3 Normal;
+	XMFLOAT3 Binormal;	// バイノーマル
+	XMFLOAT3 Tangent;	// タンジェント
+	XMFLOAT4 Diffuse;
+	XMFLOAT2 TexCoord;
+};
 
 // 色構造体
 struct COLOR
@@ -37,14 +43,11 @@ struct MATERIAL
 {
 	COLOR		Ambient;
 	COLOR		Diffuse;
-	COLOR		Specular;
+	COLOR		SpecularColor;
 	COLOR		Emission;
 	float		Shininess;
 	float		Dummy[3];//16bit境界用
 };
-
-
-
 
 // マテリアル構造体
 struct DX11_MODEL_MATERIAL
@@ -69,8 +72,6 @@ struct LIGHT
 	COLOR		Ambient;
 };
 
-
-
 class CVertexBuffer;
 class CIndexBuffer;
 class CStbTexture;
@@ -88,15 +89,6 @@ private:
 	static ID3D11RenderTargetView* m_RenderTargetView;
 	static ID3D11DepthStencilView* m_DepthStencilView;
 
-
-
-
-
-	/*
-		static XMMATRIX				m_WorldMatrix;
-		static XMMATRIX				m_ViewMatrix;
-		static XMMATRIX				m_ProjectionMatrix;
-	*/
 	static ID3D11DepthStencilState* m_DepthStateEnable;
 	static ID3D11DepthStencilState* m_DepthStateDisable;
 
@@ -112,6 +104,7 @@ public:
 	static void SetIndexBuffer(ID3D11Buffer* IndexBuffer);
 	static void SetTexture(CStbTexture* Texture);
 	static void SetTexture(CStbTexture* Texture, CStbTexture* SecTexture);
+	static void SetTexture(CStbTexture* NormalTexture, CStbTexture* Texture, CStbTexture* HeightTexture);
 	static void DrawIndexed(unsigned int IndexCount, unsigned int StartIndexLocation, int BaseVertexLocation);
 
 	static ID3D11Device* GetDevice(void) { return m_D3DDevice; }

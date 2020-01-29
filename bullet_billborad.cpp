@@ -15,7 +15,7 @@
 void CBullet_Billboard::Init()
 {
 	Count = 0;
-	m_Scale = XMFLOAT3(0.1f, 0.1f, 0.1f);
+	m_Scale = XMFLOAT3(0.01f, 0.01f, 0.01f);
 
 	vertex[0].Position = XMFLOAT3(-x, -y, 0.0f);		// 座標
 	vertex[0].Normal = XMFLOAT3(0.0f, 1.0f, 0.0f);			// 法線
@@ -49,6 +49,12 @@ void CBullet_Billboard::Init()
 	sd.pSysMem = vertex;	// 最初の頂点を格納
 	CRenderer::GetDevice()->CreateBuffer(&bd, &sd, &m_VertexBuffer);
 
+	m_Ambient = COLOR(1, 1, 1, 1);
+	m_Diffuse = COLOR(1, 1, 1, 1);
+	m_Emission = COLOR(1, 1, 1, 1);
+	m_SpecularColor = COLOR(1, 1, 1, 1);
+	m_Shininess = 20;
+
 	m_Shader = new CShader();
 	m_Shader->Init(VS_CSO::Shader_3D, PS_CSO::Shader_3D);
 }
@@ -56,21 +62,32 @@ void CBullet_Billboard::Init()
 void CBullet_Billboard::Update()
 {
 	////サイズ
-	m_Scale.x *= 0.9f;
-	m_Scale.y *= 0.9f;
+	m_Scale.x *= 0.95f;
+	m_Scale.y *= 0.95f;
 
 	//カウント
 	Count++;
-	if (Count >= 30)
+	if (Count >= 20)
 	{
 		CManager::GetScene()->DestroyGameObject(this);
 	}
+
+	XMFLOAT3 CameraPos = CManager::GetScene()->GetGameObject<CCamera>(Layer3D_CAMERA)->Get_Camera_Position();
+	//カメラと自分の距離ベクトル
+	m_Vec = XMFLOAT3(m_Position.x - CameraPos.x, m_Position.y - CameraPos.y, m_Position.z - CameraPos.z);
+	//求めたベクトルの大きさ
+	m_VecLen = sqrt(std::pow(m_Vec.x, 2) + std::pow(m_Vec.y, 2) + std::pow(m_Vec.z, 2));
 }
 
 /*---------- ビルボード描画 ----------*/
 void CBullet_Billboard::Draw()
 {
 
+	m_Material.Diffuse = m_Diffuse;
+	m_Material.Emission = m_Emission;
+	m_Material.SpecularColor = m_SpecularColor;
+	m_Material.Shininess = m_Shininess;
+	m_Shader->SetMaterial(m_Material);
 	CCamera* m_Camera = CManager::GetScene()->GetGameObject<CCamera>(Layer3D_CAMERA);
 	XMMATRIX invView = m_Camera->Get_Camera_ViewMatrix();
 
@@ -107,6 +124,8 @@ void CBullet_Billboard::Draw()
 	XMStoreFloat4x4(&promatrix4x4, camera->Get_Camera_Projection());
 	m_Shader->SetProjectionMatrix(&promatrix4x4);
 
+	m_Shader->SetCameraPosition(&camera->Get_Camera_Position4f());
+
 	m_Shader->Set();
 
 	CRenderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);	//	トポロジ設定	※トポロジ = どうやって線を結ぶか。この場合はTRIANGLESTRIP型で結ぶ
@@ -116,14 +135,13 @@ void CBullet_Billboard::Draw()
 void CBullet_Billboard::Uninit()
 {
 	m_VertexBuffer->Release();
+	m_Shader->Uninit();
+	delete m_Shader;
 }
 
-void CBullet_Billboard::Bill_Create(XMFLOAT3 Position, XMFLOAT3 Front, float Speed, CStbTexture* StbTexture)
+void CBullet_Billboard::Bill_Create(XMFLOAT3 Position,CStbTexture* StbTexture)
 {
 	Count = 0;
 	m_Position = Position;
-	m_Front = Front;
-	MoveSpeed = Speed;
-
 	m_Texture = StbTexture;
 }

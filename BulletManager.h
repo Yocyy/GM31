@@ -2,8 +2,9 @@
 #include <vector>
 #include <list>
 
-class CStbTexture;
+#include "game_object.h"
 
+class CStbTexture;
 enum class BULLET_TYPE : unsigned int{
 	MIN = -1,
 	zero,
@@ -16,6 +17,7 @@ class CBullet;
 class CBulletManager : public CGameObject{
 private:
 	constexpr static unsigned int g_kBulletTexNum = 2;
+	constexpr static unsigned int g_kBulletAmoMaxNum = 20;
 	CScene* scene;
 	CBullet* m_Bullet;
 	std::list<CBullet*> list;

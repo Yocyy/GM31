@@ -5,18 +5,19 @@
 
 constexpr float g_kBulletCircleSize(1);
 class CModel;
-class CBillboard;
+class CBullet_Billboard;
 class CStbTexture;
 class CShader;
+
 class CBullet : public CGameObject
 {
 private:
 	constexpr static float m_kBulletSpeed{ 0.5f };
+	std::list<CGameObject*> list;
 	CShader* m_Shader;
 	CModel* m_Model;
 	CStbTexture* m_Texture;
-	XMFLOAT3 g_front, g_right;
-	float Bullet_Speed;
+	XMFLOAT3 m_front, m_right;
 	const char* m_FileName;
 public:
 	void Init();
