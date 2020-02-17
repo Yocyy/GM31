@@ -171,37 +171,94 @@ float4 PointLight(PS_IN input, LIGHT Light1, float4 sampleColor)
     return outDiffuse;
 }
 
-
-
 float4 SpotLight(PS_IN input, LIGHT Light, float4 sampleColor)
 {
-    float4 outDiffuse = sampleColor;
-   // float3 LightDirection = input.inLightDirection;
-    float4 color = Light.Color;
-    //float ambient = 0.1;
-    float LightCos = -0;
-    float LightDecay = 2.0;
-    float LightStrength = 3;
+   // float4 outDiffuse = sampleColor;
+   //// float3 LightDirection = input.inLightDirection;
+   // float4 color = Light.Color;
+   // //float ambient = 0.1;
+   // float LightCos = 0;
+   // //float LightDecay = 2.0;
+   // //float LightStrength = 3;
+   // float3 ldir = normalize(input.inLightDirection);
+   // float shade = 0;
+   // float coneFactor = dot(ldir, normalize(Light.Direction.xyz)); //< スポットライトの範囲内かどうか
+    
+   // if (coneFactor > LightCos)
+   // {
+   //     shade = dot(normalize(input.inNormal.xyz), -ldir) * coneFactor * Light.Pow; //< 減衰とライトの強さを考慮
+   //     outDiffuse *= color * shade;
+   // }
+   // else
+   // {
+   //     outDiffuse = 0;
+   // }
+   //     //ピクセルからライトの距離
+   // float distanceLight = distance(Light.Position.xyz, input.inWorldPosition.xyz);
+   // //減衰率
+   // //float col = 1 / (Light.Attenuation0 + Light.Attenuation1 * distanceLight + Light.Attenuation2 * (distanceLight * distanceLight));
+    
+   // //outDiffuse *= col;
+   // //outDiffuse.a = 1.0;
+    
+   // return outDiffuse;
+    
+    
+    
+    
+    
+    float lightrange = 1000.0f;
+    float cone = 20.0f;
+    
     float3 ldir = normalize(input.inLightDirection);
-    float shade = 0;
-    float coneFactor = dot(ldir, normalize(Light.Direction.xyz)); //< スポットライトの範囲内かどうか
+    float innercorn = dot(ldir, input.inPosition.xyz);
+    float ceta = 45;
     
-    if (coneFactor > LightCos)
+    
+    input.inNormal = normalize(input.inNormal);
+
+    float4 diffuse = sampleColor;
+    
+    float3 finalColor = float3(0.0f, 0.0f, 0.0f);
+    //ライトからピクセルまでのベクトル
+    float3 lightToPixelVec = (Light.Position - input.inWorldPosition).xyz;
+        
+    //ピクセルからライトの距離
+    float distance = length(lightToPixelVec);
+    //Add the ambient light
+    //outDiffuse += saturate(Material.Ambient * 0.3 + Material.Diffuse * (Light.Color * Light.Pow));
+ 
+    float3 finalAmbient = diffuse * Material.Ambient;
+
+
+    //If pixel is too far, return pixel color with ambient light
+    if (distance > lightrange)
+        return float4(finalAmbient, diffuse.a);
+        
+    //Turn lightToPixelVec into a unit length vector describing
+    //the pixels direction from the lights position
+    lightToPixelVec /= distance;
+        
+    //Calculate how much light the pixel gets by the angle
+    //in which the light strikes the pixels surface
+    float howMuchLight = dot(lightToPixelVec, input.inNormal.xyz);
+
+    //ライトに当たっていたら
+    if (howMuchLight > 0.0f)
     {
-        shade = dot(normalize(input.inNormal.xyz), -ldir) * coneFactor * Light.Pow; //< 減衰とライトの強さを考慮
-        outDiffuse *= color * shade;
+        //Add light to the finalColor of the pixel
+        finalColor += Material.Diffuse * Light.Color;
+                    
+        //Calculate Light's Distance Falloff factor
+        finalColor /= (Light.Attenuation0 + (Light.Attenuation1 * distance)) + (Light.Attenuation2 * (distance * distance));
+
+        //Calculate falloff from center to edge of pointlight cone
+        finalColor *= pow(max(dot(-lightToPixelVec, Light.Direction.xyz), 0.0f), cone);
     }
-    else
-    {
-        outDiffuse = 0;
-    }
-        //ピクセルからライトの距離
-    float distanceLight = distance(Light.Position.xyz, input.inWorldPosition.xyz);
-    //減衰率
-    float col = 1 / (Light.Attenuation0 + Light.Attenuation1 * distanceLight + Light.Attenuation2 * (distanceLight * distanceLight));
     
-    outDiffuse *= col;
-    //outDiffuse.a = 1.0;
+    //make sure the values are between 1 and 0, and add the ambient
+    finalColor = saturate(finalColor + finalAmbient);
     
-    return outDiffuse;
+    //Return Final Color
+    return float4(finalColor, diffuse.a);
 }

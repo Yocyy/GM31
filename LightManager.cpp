@@ -41,7 +41,7 @@ void CLightManager::Init()
 
 	m_DirLightDirection = XMFLOAT4(0.0f, -1.0f, 0.0f, 0.0f);	//ライトベクトル
 	m_DirLightColor = COLOR(1.0f, 1.0f, 1.0f, 1.0f);	//ライトの色
-	m_DirLightPow = 0.4f;
+	m_DirLightPow = 0.8f;
 	m_DirLightType = DIRECTION;
 
 	m_SpotLightDirection = XMFLOAT4(0.0f, -1.0f, 0.0f, 0.0f);
@@ -100,7 +100,7 @@ void CLightManager::Draw()
 	m_Light[3].Attenuation0 = m_SpotLightAttenuation0;
 	m_Light[3].Attenuation1 = m_SpotLightAttenuation1;
 	m_Light[3].Attenuation2 = m_SpotLightAttenuation2;
-	m_Light[3].Type = SPOT;
+	m_Light[3].Type = m_SpotLightType;
 
 	// 定数バッファ更新
 	CRenderer::GetDeviceContext()->UpdateSubresource(m_LightBuffer, 0, NULL, &m_Light, 0, 0);			//ライト
@@ -111,61 +111,54 @@ void CLightManager::Draw()
 
 
 
+	//// Start the Dear ImGui frame
+	//ImGui_ImplDX11_NewFrame();
+	//ImGui_ImplWin32_NewFrame();
+	//ImGui::NewFrame();
+	//// Create imGui Test Window
 
-	float g_Hoge = 0;
-	// Our state
-	bool show_demo_window = true;
-	bool show_another_window = false;
-	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+	////Directional Light
+	////ImGui::SetNextWindowPos(ImVec2(0, 20));
+	////ImGui::SetNextWindowSize(ImVec2(300, 200));
+	//ImGui::Begin("DirectionalLight");
+	//ImGui::Text("(%.1f FPS)", ImGui::GetIO().Framerate);
+	//ImGui::SliderFloat3("Direction.XYZ", &m_DirLightDirection.x, -1.0f, 1.0f);
+	//ImGui::SliderFloat3("Color.RGB", &m_DirLightColor.r, 0.0f, 1.0f);
+	//ImGui::SliderFloat("LightPow", &m_DirLightPow, 0.0f, 30.0f);
+	//ImGui::End();
 
-	// Start the Dear ImGui frame
-	ImGui_ImplDX11_NewFrame();
-	ImGui_ImplWin32_NewFrame();
-	ImGui::NewFrame();
-	// Create imGui Test Window
+	////PointLight
+	////ImGui::SetNextWindowPos(ImVec2(350, 20));
+	////ImGui::SetNextWindowSize(ImVec2(300, 200));
+	//ImGui::Begin("PointLight");
+	//ImGui::SliderFloat3("Color.RGB", &m_Color.r, 0.0f, 1.0f);
+	//ImGui::SliderFloat("Pow", &m_Pow, 0.0f, 30.0f);
+	//ImGui::SliderFloat("Attenuation0", &m_Attenuation0, 0.0f, 1.0f);
+	//ImGui::SliderFloat("Attenuation1", &m_Attenuation1, 0.0f, 1.0f);
+	//ImGui::SliderFloat("Attenuation2", &m_Attenuation2, 0.0f, 1.0f);
+	//
+	//ImGui::End();
 
-	//Directional Light
-	//ImGui::SetNextWindowPos(ImVec2(0, 20));
-	//ImGui::SetNextWindowSize(ImVec2(300, 200));
-	ImGui::Begin("DirectionalLight");
-	ImGui::Text("(%.1f FPS)", ImGui::GetIO().Framerate);
-	ImGui::SliderFloat3("Direction.XYZ", &m_DirLightDirection.x, -1.0f, 1.0f);
-	ImGui::SliderFloat3("Color.RGB", &m_DirLightColor.r, 0.0f, 1.0f);
-	ImGui::SliderFloat("LightPow", &m_DirLightPow, 0.0f, 30.0f);
-	ImGui::End();
+	////SpotLight
+	////ImGui::SetNextWindowPos(ImVec2(700, 20));
+	////ImGui::SetNextWindowSize(ImVec2(300, 200));
+	//ImGui::Begin("SpotLight");
+	//ImGui::SliderFloat3("Color.RGB", &m_SpotLightColor.r, 0.0f, 1.0f);
+	////ImGui::SliderFloat3("Position.XYZ", &m_SpotLightPosition.x, 0.0f, 1.0f);
+	//ImGui::SliderFloat("Pow", &m_SpotLightPow, 0.0f, 30.0f);
+	//ImGui::SliderFloat("Attenuation0", &m_SpotLightAttenuation0, 0.0f, 1.0f);
+	//ImGui::SliderFloat("Attenuation1", &m_SpotLightAttenuation1, 0.0f, 1.0f);
+	//ImGui::SliderFloat("Attenuation2", &m_SpotLightAttenuation2, 0.0f, 1.0f);
 
-	//PointLight
-	//ImGui::SetNextWindowPos(ImVec2(350, 20));
-	//ImGui::SetNextWindowSize(ImVec2(300, 200));
-	ImGui::Begin("PointLight");
-	ImGui::SliderFloat3("Color.RGB", &m_Color.r, 0.0f, 1.0f);
-	ImGui::SliderFloat("Pow", &m_Pow, 0.0f, 30.0f);
-	ImGui::SliderFloat("Attenuation0", &m_Attenuation0, 0.0f, 1.0f);
-	ImGui::SliderFloat("Attenuation1", &m_Attenuation1, 0.0f, 1.0f);
-	ImGui::SliderFloat("Attenuation2", &m_Attenuation2, 0.0f, 1.0f);
-	
-	ImGui::End();
-
-	//SpotLight
-	//ImGui::SetNextWindowPos(ImVec2(700, 20));
-	//ImGui::SetNextWindowSize(ImVec2(300, 200));
-	ImGui::Begin("SpotLight");
-	ImGui::SliderFloat3("Color.RGB", &m_SpotLightColor.r, 0.0f, 1.0f);
-	//ImGui::SliderFloat3("Position.XYZ", &m_SpotLightPosition.x, 0.0f, 1.0f);
-	ImGui::SliderFloat("Pow", &m_SpotLightPow, 0.0f, 30.0f);
-	ImGui::SliderFloat("Attenuation", &m_SpotLightAttenuation0, 0.0f, 1.0f);
-	ImGui::SliderFloat("Attenuation", &m_SpotLightAttenuation1, 0.0f, 1.0f);
-	ImGui::SliderFloat("Attenuation", &m_SpotLightAttenuation2, 0.0f, 1.0f);
-
-	ImGui::End();
+	//ImGui::End();
 
 
 
 
-	// Assemble Together Draw Data
-	ImGui::Render();
-	// Render Draw Data
-	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+	//// Assemble Together Draw Data
+	//ImGui::Render();
+	//// Render Draw Data
+	//ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 }
 
 void CLightManager::Uninit()

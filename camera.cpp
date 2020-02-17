@@ -33,7 +33,7 @@ void CCamera::Init()
 	fov = 1.0f;
 	aspect = NULL;
 	nearZ = 1.0f;
-	farZ = 1000.0f;
+	farZ = 100000.0f;
 	m_ScopeEnable = false;
 }
 

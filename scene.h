@@ -12,6 +12,7 @@ enum Layer
 	Layer3D_Manager,
 	Layer3D_LIGHT,
 	Layer3D_CAMERA,
+	Layer3D_SKYBOX,
 	Layer3D_MODEL,
 	Layer3D_EFFECT,
 	Layer3D_BULLET,

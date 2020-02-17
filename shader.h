@@ -9,12 +9,20 @@ struct CONSTANT
 	XMFLOAT4	CameraPosition;
 };
 
+struct SKYBOX
+{
+	XMFLOAT4 CameraPosition;
+	XMFLOAT2 Aspect;
+
+};
+
 enum class VS_CSO
 {
 	MIN = -1,
 	Shader_2D,
 	Shader_3D,
 	NormalMapping,
+	SkyBox,
 	MAX,
 };
 
@@ -24,6 +32,7 @@ enum class PS_CSO
 	Shader_2D,
 	Shader_3D,
 	NormalMapping,
+	SkyBox,
 	MAX,
 };
 
@@ -31,23 +40,22 @@ class CShader
 {
 private:
 	const char* VSshaderfile[static_cast<unsigned int>(VS_CSO::MAX)] = {
-		"x64/debug/shader2DTestVS.cso",
-		"x64/debug/Shader3D_VS.cso",
-		"x64/debug/Shader3DNormalMappingVS.cso"
+		"asset/resource/shader2DTestVS.cso",
+		"asset/resource/Shader3D_VS.cso",
+		"asset/resource/Shader3DNormalMappingVS.cso",
+		"asset/resource/Shadar3DSkyBox_VS.cso"
 	};
 	const char* PSshaderfile[static_cast<unsigned int>(PS_CSO::MAX)] = {
-		"x64/debug/shader2DTestPS.cso",
-		"x64/debug/Shader3D_PS.cso",
-		"x64/debug/Shader3DNormalMappingPS.cso"
+		"asset/resource/shader2DTestPS.cso",
+		"asset/resource/Shader3D_PS.cso",
+		"asset/resource/Shader3DNormalMappingPS.cso",
+		"asset/resource/Shadar3DSkyBox_PS.cso"
 	};
 
 	ID3D11VertexShader*     m_VertexShader;
 	ID3D11PixelShader*      m_PixelShader;
 	ID3D11InputLayout*      m_VertexLayout;
 
-	//ID3D11Buffer*			m_WorldBuffer;
-	//ID3D11Buffer*			m_ViewBuffer;
-	//ID3D11Buffer*			m_ProjectionBuffer;
 	ID3D11Buffer*			m_ConstantBuffer;
 	ID3D11Buffer*			m_MaterialBuffer;
 	ID3D11Buffer*			m_LightBuffer;

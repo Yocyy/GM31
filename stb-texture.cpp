@@ -39,6 +39,7 @@ void CStbTexture::Load(const char *FileName)
 	D3D11_SHADER_RESOURCE_VIEW_DESC SRVDesc = {};
 	SRVDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	SRVDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	//SRVDesc.Texture2D.MostDetailedMip = 10;
 	SRVDesc.Texture2D.MipLevels = 1;
 
 	hr = CRenderer::GetDevice()->CreateShaderResourceView(m_Texture, &SRVDesc, &m_ShaderResourceView);

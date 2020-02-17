@@ -133,9 +133,14 @@ void AK::Reload()
 
 void AK::Init()
 {
+	this->m_Rotation = XMFLOAT3(0.0f, 0.0f, 0.0f);	//float(rand() % 10)
+	this->m_Scale = XMFLOAT3(0.1f, 0.1f, 0.1f);
 	this->m_AudioClip = new CAudioClip();
 	this->m_AudioClip->Load("asset/sound/SE/shotsound_001.wav");
-
+	this->m_Model = new CModelAnimation();
+	this->m_Model->Load("asset/MODEL/45ACP/Handgun_Game_Blender Gamer Engine.obj");
+	this->m_Shader = new CShader();
+	this->m_Shader->Init(VS_CSO::Shader_3D, PS_CSO::Shader_3D);
 	this->m_BulletNum = this->m_kBulletMaxNum;
 }
 
@@ -157,16 +162,41 @@ void AK::Update()
 void AK::Draw()
 {
 	if (!this->m_CurrentWeapon) return;
+
+	XMMATRIX world;
+	world = XMMatrixScaling(m_Scale.x, m_Scale.y, m_Scale.z);
+	world *= XMMatrixRotationRollPitchYaw(m_Rotation.x, m_Rotation.y, m_Rotation.z);
+	world *= XMMatrixTranslation(m_Position.x, m_Position.y, m_Position.z);
+
+	XMFLOAT4X4 world4x4;
+	XMStoreFloat4x4(&world4x4, world);
+	m_Shader->SetWorldMatrix(&world4x4);
+	CRenderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	CCamera* camera;
+	camera = CManager::GetScene()->GetGameObject<CCamera>(Layer3D_CAMERA);
+	XMFLOAT4X4 viewmatrix4x4;
+	XMStoreFloat4x4(&viewmatrix4x4, camera->Get_Camera_ViewMatrix());
+	m_Shader->SetViewMatrix(&viewmatrix4x4);
+
+	XMFLOAT4X4 promatrix4x4;
+	XMStoreFloat4x4(&promatrix4x4, camera->Get_Camera_Projection());
+	m_Shader->SetProjectionMatrix(&promatrix4x4);
+
+	m_Shader->SetCameraPosition(&camera->Get_Camera_Position4f());
+
+	m_Shader->Set();
+	m_Model->Draw(world);
 }
 
 void AK::Uninit()
 {
-	//this->m_Model->Unload();
-	//delete this->m_Model;
-	//this->m_Shader->Uninit();
-	//delete this->m_Shader;
-	//this->m_AudioClip->Unload();
-	//delete this->m_AudioClip;
+	this->m_Model->Unload();
+	delete this->m_Model;
+	this->m_Shader->Uninit();
+	delete this->m_Shader;
+	this->m_AudioClip->Unload();
+	delete this->m_AudioClip;
 }
 
 void M4A1::Action()

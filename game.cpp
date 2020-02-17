@@ -26,6 +26,7 @@
 #include "skydome.h"
 #include "polygon2D.h"
 #include "WeaponState.h"
+#include "Skybox.h"
 
 static bool flag_result;
 
@@ -36,7 +37,7 @@ void CGame::Init()
 	AddGameObject<CBulletManager>(Layer3D_Manager);
 	AddGameObject<CCamera>(Layer3D_CAMERA);
 	AddGameObject<CJudgement>(Layer3D_CAMERA);
-	AddGameObject<CBall>(Layer3D_MODEL);
+	//AddGameObject<CBall>(Layer3D_MODEL);
 	AddGameObject<CField>(Layer3D_MODEL);
 	AddGameObject<CWall>(Layer3D_MODEL);
 
@@ -49,7 +50,7 @@ void CGame::Init()
 	AddGameObject<CEnemy>(Layer3D_MODEL);
 	AddGameObject<CEnemy>(Layer3D_MODEL);
 	AddGameObject<CEnemyAI>(Layer3D_MODEL);
-
+	AddGameObject<CSkybox>(Layer3D_SKYBOX);
 	//AddGameObject<CM4A1>(Layer3D_MODEL);
 	//AddGameObject<CFieldNormal>(Layer3D_MODEL);
 	//AddGameObject<CSkydome>(Layer3D_MODEL);

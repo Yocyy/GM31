@@ -10,6 +10,7 @@
 #include <windows.h>
 #include <assert.h>
 #include <d3d11.h>
+#include <D3DX11tex.h>
 #include <DirectXMath.h>
 using namespace DirectX;
 #include <cassert>

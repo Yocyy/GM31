@@ -31,8 +31,8 @@
     <Filter Include="resource\imgui">
       <UniqueIdentifier>{19795292-3f5a-40ee-80c9-a50722dde1ab}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assimp">
-      <UniqueIdentifier>{ca1d5629-a540-486b-9046-2205760fc592}</UniqueIdentifier>
+    <Filter Include="DirectXTK">
+      <UniqueIdentifier>{168f7434-2f8b-4488-97f7-6e1344960c12}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -183,12 +183,6 @@
     <ClInclude Include="WeaponState.h">
       <Filter>_制作中</Filter>
     </ClInclude>
-    <ClInclude Include="Assimp\Mesh.h">
-      <Filter>Assimp</Filter>
-    </ClInclude>
-    <ClInclude Include="Assimp\Model.h">
-      <Filter>Assimp</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="camera.cpp">
@@ -323,12 +317,6 @@
     <ClCompile Include="WeaponState.cpp">
       <Filter>_制作中</Filter>
     </ClCompile>
-    <ClCompile Include="Assimp\Mesh.cpp">
-      <Filter>Assimp</Filter>
-    </ClCompile>
-    <ClCompile Include="Assimp\Model.cpp">
-      <Filter>Assimp</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="pixelShader.hlsl">
@@ -359,6 +347,12 @@
       <Filter>シェーダーファイル</Filter>
     </FxCompile>
     <FxCompile Include="Shader3DNormalMappingVS.hlsl">
+      <Filter>シェーダーファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Shadar3DSkyBox_PS.hlsl">
+      <Filter>シェーダーファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Shadar3DSkyBox_VS.hlsl">
       <Filter>シェーダーファイル</Filter>
     </FxCompile>
   </ItemGroup>

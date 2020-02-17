@@ -1,5 +1,5 @@
 #pragma once
-
+#include <vector>
 // í∏ì_ç\ë¢ëÃ
 struct VERTEX_3D
 {
@@ -105,6 +105,8 @@ public:
 	static void SetTexture(CStbTexture* Texture);
 	static void SetTexture(CStbTexture* Texture, CStbTexture* SecTexture);
 	static void SetTexture(CStbTexture* NormalTexture, CStbTexture* Texture, CStbTexture* HeightTexture);
+
+	static void SetSkyBoxTextures(CStbTexture* Textures[]);
 	static void DrawIndexed(unsigned int IndexCount, unsigned int StartIndexLocation, int BaseVertexLocation);
 
 	static ID3D11Device* GetDevice(void) { return m_D3DDevice; }

@@ -152,9 +152,6 @@ void CRenderer::Init()
 
 	m_ImmediateContext->OMSetDepthStencilState(m_DepthStateEnable, NULL);
 
-
-
-
 	// サンプラーステート設定
 	D3D11_SAMPLER_DESC samplerDesc;
 	ZeroMemory(&samplerDesc, sizeof(samplerDesc));
@@ -172,6 +169,21 @@ void CRenderer::Init()
 	m_D3DDevice->CreateSamplerState(&samplerDesc, &samplerState);
 
 	m_ImmediateContext->PSSetSamplers(0, 1, &samplerState);
+
+	D3D11_SAMPLER_DESC sampDesc;
+	ZeroMemory(&sampDesc, sizeof(sampDesc));
+	sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	sampDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+	sampDesc.MinLOD = 0;
+	sampDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+	ID3D11SamplerState* samplerLinear = NULL;
+
+	m_D3DDevice->CreateSamplerState(&sampDesc, &samplerLinear);
+	m_ImmediateContext->PSSetSamplers(10, 0, &samplerLinear);
 }
 
 
@@ -259,6 +271,18 @@ void CRenderer::SetTexture(CStbTexture* Texture, CStbTexture* SecTexture)
 void  CRenderer::SetTexture(CStbTexture* NormalTexture, CStbTexture* Texture, CStbTexture* HeightTexture) {
 	ID3D11ShaderResourceView* srv[3] = { NormalTexture->GetShaderResourceView() , Texture->GetShaderResourceView() ,HeightTexture->GetShaderResourceView() };
 	m_ImmediateContext->PSSetShaderResources(0, 3, srv);
+}
+
+void CRenderer::SetSkyBoxTextures(CStbTexture* Textures[]) {
+	ID3D11ShaderResourceView* srv[6] = {
+		Textures[0]->GetShaderResourceView(),
+		Textures[1]->GetShaderResourceView(),
+		Textures[2]->GetShaderResourceView(),
+		Textures[3]->GetShaderResourceView(),
+		Textures[4]->GetShaderResourceView(),
+		Textures[5]->GetShaderResourceView()
+	};
+	m_ImmediateContext->PSSetShaderResources(10, 6, srv);
 }
 
 void CRenderer::DrawIndexed(unsigned int IndexCount, unsigned int StartIndexLocation, int BaseVertexLocation)

@@ -18,7 +18,7 @@ void CField::Init()
 		{
 			m_Vertex[z * FIELD_X + x].Position.x = x * size - FIELD_X / 2 * size;
 			m_Vertex[z * FIELD_X + x].Position.z = -z * size + FIELD_Z / 2 * size;
-			m_Vertex[z * FIELD_X + x].Position.y = sinf( x * 0.5f ) * sinf(z * 0.3f) * 2.0f;
+			m_Vertex[z * FIELD_X + x].Position.y = 0;//sinf( x * 0.5f ) * sinf(z * 0.3f) * 2.0f;
 			m_Vertex[z * FIELD_X + x].Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 			m_Vertex[z * FIELD_X + x].TexCoord = XMFLOAT2(x, z);
 			m_Vertex[z * FIELD_X + x].Normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
